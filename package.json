@@ -1,0 +1,21 @@
+{
+  "name": "sd1-final-project",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node build/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "mongodb": "^6.15.0",
+    "saml.servercore": "^3.7.0-Dev.13"
+  }
+}

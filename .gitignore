@@ -1,0 +1,15 @@
+# Espacio de trabajo
+**/node_modules/
+**/build/
+**/.**
+**/*.log
+**/*.env
+image/
+avatar/
+!.gitignore
+
+# Dependencies of repositories
+src/DBManager/
+src/QR-Code/
+client/logic/src/WebApp/
+client/logic/src/QR-Code/

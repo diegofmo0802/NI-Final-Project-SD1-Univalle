@@ -1,5 +1,5 @@
-import Manager from "../DBManager/Manager";
-import * as Schemas from "./DBScheme";
+import Manager from "../DBManager/Manager.js";
+import * as Schemas from "./DBScheme.js";
 
 const DB_HOST = process.env.DB_HOST;
 const DB_PORT = process.env.DB_PORT;

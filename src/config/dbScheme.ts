@@ -6,7 +6,12 @@ export const user = new Schema({
         firstName: { type: 'string', minLength: 2, maxLength: 20 },
         lastName: { type: 'string', minLength: 2, maxLength: 20 },
         username: { type: 'string', required: true, unique: true, minLength: 3, maxLength: 20 },
-        email: { type: 'string', required: true, unique: true, minLength: 6, maxLength: 100 }
+        email: { type: 'string', required: true, unique: true, minLength: 6, maxLength: 100 },
+        role: { type: 'string', required: true, default: 'user' }
+    } },
+    permissions: { type: 'object', required: true, schema: {
+        login: { type: 'boolean', required: true, default: true },
+        admin: { type: 'boolean', required: true, default: false }
     } },
     auth: { type: 'object', required: true, schema: {
         verified: { type: 'boolean', required: true, default: false },

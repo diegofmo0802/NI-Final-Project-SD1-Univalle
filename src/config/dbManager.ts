@@ -1,5 +1,5 @@
 import Manager from "../DBManager/Manager.js";
-import * as Schemas from "./DBScheme.js";
+import * as Schemas from "./dbScheme.js";
 
 const {
     DB_HOST = 'localhost',

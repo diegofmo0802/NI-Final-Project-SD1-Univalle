@@ -1,6 +1,6 @@
-import JwtManager from "saml.servercore/build/Beta/JwtManager";
-import ProjectDebug from "./ProjectDebug";
-import AuthManager from "managers/AuthManager";
+import JwtManager from "saml.servercore/build/Beta/JwtManager.js";
+import ProjectDebug from "./ProjectDebug.js";
+import AuthManager from "../managers/AuthManager.js";
 
 const {
     JWT_SECRET = 'secret'

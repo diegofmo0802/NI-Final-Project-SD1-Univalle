@@ -45,6 +45,12 @@ export class AuthManager {
         };
         return { valid: true, content: { uuid, expire } };
     }
+    public generateSessionToken(uuid: string, expire?: number): string {
+        return this.jwt.sign({
+            uuid,
+            expire: expire ?? Date.now() + 1000 * 60 * 60 * 24 * 7
+        });
+    }
 }
 export namespace AuthManager {
     export interface passwordObject {

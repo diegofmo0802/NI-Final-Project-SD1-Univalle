@@ -1,12 +1,15 @@
-# Espacio de trabajo
+# Build setting
 **/node_modules/
 **/build/
 **/.**
 **/*.log
 **/*.env
-image/
-avatar/
 !.gitignore
+
+# Work space setting to Project IDX
+!.idx
+!.mongodb
+.mongodb/var
 
 # Dependencies of repositories
 src/DBManager/

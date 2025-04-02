@@ -1,0 +1,16 @@
+.Logo {
+    align-items: center;
+    background: transparent;
+    border: none;
+    display: flex;
+    height: 100%;
+    outline-style: none;
+    > .Logo-image, > img {
+        height: 100%;
+        padding: 0 1rem 0 0;
+    }
+    > .Logo-text, > span, > p, h1 {
+        color: var(--Logo-color, #1159c4);
+        font-size: 1.75rem;;
+    }
+}

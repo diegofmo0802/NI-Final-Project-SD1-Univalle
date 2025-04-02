@@ -1,3 +1,79 @@
-@import './basic.css';
-@import './schema.css';
+@import './base.css';
 @import './components.css';
+
+body {
+    overflow: scroll hidden;
+}
+#menu {
+    align-items: center;
+    display: flex;
+    height: var(--Menu-height);
+    left: 0;
+    padding: 0.5 1rem;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 6;
+    > .Logo {
+        cursor: pointer;
+        flex: 0 0 auto;
+        height: 3rem;
+    }
+    > #menu-options {
+        flex: 1 1 auto;
+        display: flex;
+        height: 2rem;
+        justify-content: end;
+        > button {
+            flex: 0 0 auto;
+            margin: 0 0.1rem;
+            padding: 0.5rem;
+        }
+    }
+    > #session:not(:empty) {
+        flex: 0 0 auto;
+        margin-left: 1rem;
+    }
+}
+
+#content {
+    background: var(--light-content-bg) ;
+    height: calc(100% - var(--Menu-height) - (var(--Content-margin) * 2));
+    width: calc(100% - (var(--Content-margin) * 2));
+    left: 0;
+    top: 4rem;
+    margin: var(--Content-margin);
+    position: absolute;
+    overflow: auto;
+}
+
+@media (max-width: 772px) {
+    #menu > #menu-options::before {
+        content: "Desplegar menú";
+        display: inline-block;
+        text-align: center;
+        color: #FFF;
+        padding: 0.7em;
+    }
+    #menu > #menu-options > * {
+        display: none;
+    }
+    #menu > #menu-options:focus > *,
+    #menu > #menu-options:hover > * {
+        display: block;
+    }
+    #menu > #menu-options {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    #menu > .Logo > img {
+        aspect-ratio: 1.2 / 1;
+        height:  3rem;
+        object-fit: cover;
+        object-position: left;
+        padding: 0;
+    }
+    #menu > .Logo > p {
+        display: none;
+    }
+}

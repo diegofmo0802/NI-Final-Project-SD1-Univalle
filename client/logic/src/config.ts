@@ -1,13 +1,15 @@
 import Language from "./language.js";
-import { Component, Element } from "./WebApp/WebApp.js";
+import { Element } from "./WebApp/WebApp.js";
 import { Menu } from "./components/Menu.js";
+import { session } from "./app.js";
+import Logo from "./components/basic.components/Logo.js";
 
 // App language configuration
 
 await Language.load('en');
 
 // App schema configuration
-const menu = new Menu();
+const menu = new Menu(session, new Logo('DS1 Final', '/client/assets/logo.svg'));
 
 menu.addButton('home', Language.get('menu.button.home'));
 menu.addButton('about', Language.get('menu.button.about'));

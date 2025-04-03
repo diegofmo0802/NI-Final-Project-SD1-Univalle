@@ -12,6 +12,9 @@ export function addApiRoutes(server: ServerCore) {
     server.addAction('POST', route('auth/login'), (request, response) => {
         authRule.login(new ApiRequest(request, response));
     });
+    server.addAction('POST', route('auth/register'), (request, response) => {
+        authRule.register(new ApiRequest(request, response));
+    });
     server.addAction('POST', route('auth/logout'), (request, response) => {
         authRule.logout(new ApiRequest(request, response));
     });

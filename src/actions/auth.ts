@@ -3,7 +3,6 @@ import ApiRequest from '../helper/ApiRequest.js';
 import authManager from '../config/authManager.js';
 import ProjectDebug from '../config/ProjectDebug.js';
 
-
 export async function login(apiRequest: ApiRequest) {
     ProjectDebug.log('executing login');
     ProjectDebug.log('getting post data in mimetype json');
@@ -25,6 +24,24 @@ export async function login(apiRequest: ApiRequest) {
     apiRequest.send({
         user: user.publicData,
         session: apiRequest.authToken
+    });
+}
+
+export async function register(apiRequest: ApiRequest) {
+    const post = await apiRequest.post;
+    if (post.mimeType !== 'application/json') return void apiRequest.sendError('Invalid mime type', 400);
+    const {
+        username, email, password
+    } = await post.content;
+    if (!username || !email || !password) return void apiRequest.sendError('Invalid data', 400);
+    const userCheck = await User.getUserByUserName(username);
+    if (userCheck) return void apiRequest.sendError('User already exists', 409);
+    const user = await User.create({ username, email, password });
+    if (!user) return void apiRequest.sendError('Error creating user', 500);
+    apiRequest.authToken = apiRequest.generateSessionToken(user);
+    apiRequest.send({
+        user: user.publicData,
+        session: apiRequest.generateSessionToken(user)
     });
 }
 

@@ -13,10 +13,11 @@ export namespace Api {
             success: true;
             result: T;
         }
-        export interface Error {
-            success: true;
+        export interface Error extends Base{
+            success: false;
             reason: string;
         }
     }
+    export type Response<T extends any = any> = (Response.Success<T> | Response.Error);
 }
 export default Api;

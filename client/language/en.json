@@ -3,6 +3,19 @@
     "menu.button.about": "about us",
     "menu.button.users": "users",
 
-    "page.home.welcome-title": "Welcome to ????",
-    "page.home.welcome-message": "welcome to the app"
+    "page.home.welcome-title": "temporal title",
+    "page.home.welcome-message": "a default message",
+
+    "page.login.title": "Log-in",
+    "page.login.username-label": "username",
+    "page.login.password-label": "password",
+    "page.login.submit-button": "log-in",
+
+    "page.register.title": "Register",
+    "page.register.username-label": "username",
+    "page.register.email-label": "email address",
+    "page.register.password-label": "password",
+    "page.register.confirm-password-label": "repeat password",
+    "page.register.submit-button": "create",
+    "page.register.error.password-no-match": "password and confirmation is not the same"
 }

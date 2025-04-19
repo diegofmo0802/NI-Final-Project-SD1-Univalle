@@ -3,6 +3,8 @@ import { Element } from "./WebApp/WebApp.js";
 import { Menu } from "./components/Menu.js";
 import { session } from "./app.js";
 import Logo from "./components/basic.components/Logo.js";
+//@ts-ignore
+window.l = Language
 
 // App language configuration
 

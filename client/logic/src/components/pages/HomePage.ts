@@ -1,6 +1,6 @@
 import { Component, Element } from "../../WebApp/WebApp.js";
 import Language from "../../language.js";
-import BasicCard from "../../components/utilities/BasicCard.js";
+import BasicCard from "../utilities/BasicCard.js";
 
 export class HomePage extends Component<'div'> {
     protected component: Element<"div">;
@@ -9,7 +9,7 @@ export class HomePage extends Component<'div'> {
             new BasicCard(
                 Language.get('page.home.welcome-title'),
                 Language.get('page.home.welcome-message'),
-                '/client/source/logo/saml.svg'
+                '/client/assets/logo.svg'
             )
         );
     }

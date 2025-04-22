@@ -11,6 +11,7 @@ export class User implements User.data {
     public _permissions: User.Permission;
     public _auth: User.auth;
     private _original_profile: User.profile;
+    private _original_config: User.config;
     private _original_permissions: User.Permission;
     private _original_auth: User.auth;
     private constructor(data: User.data) {
@@ -19,22 +20,25 @@ export class User implements User.data {
         this._permissions = data.permissions;
         this._auth = data.auth;
         this._original_profile = { ...data.profile };
+        this._original_config = { ...data.config };
         this._original_permissions = { ...data.permissions };
         this._original_auth = { ...data.auth };
     }
     public get publicData(): User.publicData{
-        const { _id, profile, permissions } = this.data;
-        return { _id, profile, permissions };
+        const { _id, profile, config, permissions } = this.data;
+        return { _id, profile, config, permissions };
     }
     public get data(): User.data {
         return {
             _id: this._id,
             profile: this._original_profile,
+            config: this._original_config,
             permissions: this._original_permissions,
             auth: this._original_auth
         }
     }
     public get profile(): User.profile { return this._profile; }
+    public get config(): User.config { return this._original_config; }
     public get permissions(): User.Permission { return this._permissions; }
     public get auth(): User.auth { return this._auth; }
     public set profile(data: User.profile) {
@@ -119,22 +123,24 @@ export class User implements User.data {
             const insertInfo = await collection.insertOne({
                 _id: uuid,
                 profile: {
-                    firstName: data.firstName,
-                    lastName: data.lastName,
+                    type: data.type,
                     username: data.username,
+                    name: data.name,
+                    bio: data.bio,
+                    avatar: data.avatar,
                     email: data.email,
-                    role: 'user'
+                    phone: data.phone,
+                    address: data.address,
                 },
-                permissions: {
-                    admin: false, login: true
-                },
+                config: {},
+                permissions: {},
                 auth: {
-                    verified: false,
                     verifyToken: null,
+                    verified: false,
                     passwordHash,
                     passwordSalt
                 }
-            })
+            });
             return insertInfo.insertedId;
         });
         const newUser = await db.collection('user').operation(async (db, collection) => {
@@ -149,13 +155,18 @@ export namespace User {
     export type data = typeof user.infer;
     export type publicData = Omit<data, 'auth'>;
     export type profile = data['profile'];
-    export type auth = data['auth'];
+    export type config = data['config'];
     export type Permission = data['permissions'];
+    export type auth = data['auth'];
     export interface newUser {
-        firstName?: string;
-        lastName?: string;
+        type: 'volunteer' | 'foundation';
         username: string;
+        name: string;
+        bio: string;
+        avatar: string;
         email: string;
+        phone: string;
+        address: string;
         password: string;
     }
 }

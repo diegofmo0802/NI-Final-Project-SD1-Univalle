@@ -5,12 +5,23 @@ export const user = new Schema({
     profile: { type: 'object', required: true, schema: {
         type: { type: 'string', required: true, enum: ['volunteer', 'foundation'], default: 'volunteer' },
         username: { type: 'string', required: true, unique: true, minLength: 3, maxLength: 20 },
-        name: { type: 'string', required: true, minLength: 3, maxLength: 80 },
-        bio: { type: 'string', required: true, minLength: 10, maxLength: 500 },
-        avatar: { type: 'string', nullable: true },
-        email: { type: 'string', required: true, unique: true, minLength: 6, maxLength: 100 },
-        phone: { type: 'string', required: true, unique: true, minLength: 10, maxLength: 10 },
-        address: { type: 'string', required: true, minLength: 10, maxLength: 200 },
+        name:     { type: 'string', nullable: true, default: null, minLength: 3, maxLength: 80 },
+        bio:      { type: 'string', nullable: true, default: null, minLength: 10, maxLength: 500 },
+        avatar:   { type: 'string', default: '/client/assets/logo.svg' },
+        // email:    { type: 'string', required: true, unique: true, minLength: 6, maxLength: 100 },
+        phone:    { type: 'string', nullable: true, default: null, unique: true, minLength: 10, maxLength: 10 },
+        address:  { type: 'string', nullable: true, default: null, minLength: 10, maxLength: 200 },
+    } },
+    email: { type: 'object', required: true, schema: {
+        address: { type: 'string', required: true, unique: true, minLength: 6, maxLength: 100 },
+        verified: { type: 'boolean', required: true, default: false },
+        verifyToken: { type: 'string', nullable: true, default: null }
+    } },
+    auth: { type: 'object', required: true, schema: {
+        verified: { type: 'boolean', required: true, default: false },
+        verifyToken: { type: 'string', nullable: true },
+        passwordHash: { type: 'string', required: true, minLength: 256, maxLength: 256 },
+        passwordSalt: { type: 'string', required: true, minLength: 32, maxLength: 32 }
     } },
     config: { type: 'object', required: true, schema: {
         nameVisible: { type: 'boolean', required: true, default: true },
@@ -23,13 +34,7 @@ export const user = new Schema({
         login: { type: 'boolean', required: true, default: true },
         volunteer: { type: 'boolean', required: true, default: false },
         foundation: { type: 'boolean', required: true, default: false }
-    } },
-    auth: { type: 'object', required: true, schema: {
-        verified: { type: 'boolean', required: true, default: false },
-        verifyToken: { type: 'string', nullable: true },
-        passwordHash: { type: 'string', required: true, minLength: 256, maxLength: 256 },
-        passwordSalt: { type: 'string', required: true, minLength: 32, maxLength: 32 }
-    } },
+    } }
 });
 
 export const volunteer = new Schema({

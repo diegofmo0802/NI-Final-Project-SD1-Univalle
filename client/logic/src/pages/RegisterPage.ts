@@ -4,7 +4,7 @@ import TextInput from "../components/basic.components/TextInput.js";
 import Button from "../components/basic.components/Button.js";
 import Loading from "../components/basic.components/Loading.js";
 import LiveImageInput from "../components/basic.components/LiveImageInput.js";
-import Api from "api/Api.js";
+import Api from "../api/Api.js";
 import app, { session } from "app.js";
 
 export class RegisterPage extends Component<'div', RegisterPage.eventMap> {

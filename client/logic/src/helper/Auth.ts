@@ -1,4 +1,4 @@
-import Api from "api/Api";
+import Api from "../api/Api.js";
 
 export class Auth {
     public static async checkAuth(auth?: Auth.AuthExec): Promise<boolean> {

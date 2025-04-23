@@ -31,6 +31,11 @@ export class ApiRequest {
             expires: info.valid ? new Date(info.content.expire) : undefined
         });
     }
+    public sendCustom<result>(data: string | Buffer, code: number = 200): void {
+        if (this.sended) throw new Error("Response already sended");
+        this.sended = true;
+        this.response.send(data);
+    }
     public send<result>(result: result, code: number = 200): void {
         if (this.sended) throw new Error("Response already sended");
         this.sended = true;

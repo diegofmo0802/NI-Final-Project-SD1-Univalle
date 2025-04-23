@@ -17,5 +17,8 @@
     "page.register.password-label": "password",
     "page.register.confirm-password-label": "repeat password",
     "page.register.submit-button": "create",
-    "page.register.error.password-no-match": "password and confirmation is not the same"
+    "page.register.error.password-no-match": "password and confirmation is not the same",
+
+    "api.register.user-already-exists": "the user already exists",
+    "api.register.avatar-error": "failed to save avatar"
 }

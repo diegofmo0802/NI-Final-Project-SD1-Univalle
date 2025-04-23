@@ -58,7 +58,8 @@ export async function register(apiRequest: ApiRequest) {
     let avatarID: string | null = null;
     let iconData: Buffer | null = null;
     if (avatar != null) {
-        if (avatar.size > 1000000) return void apiRequest.sendError('Avatar size is too big', 400);
+        const MAX_SIZE = (1024 * 1024) * 4;
+        if (avatar.size > MAX_SIZE) return void apiRequest.sendError('Avatar size is too big', 400);
         if (!Image.isImageFile(avatar.content, ['jpeg', 'jpg', 'png'])) return void apiRequest.sendError('Invalid avatar format', 400);
         iconData = avatar.content;
     }
@@ -72,7 +73,6 @@ export async function register(apiRequest: ApiRequest) {
     /* Creating the new user */
     const user = await userManager.createUser(newUser);
     if (typeof user === 'string') return void apiRequest.sendError(user, 400);
-
     apiRequest.authToken = apiRequest.generateSessionToken(user);
     apiRequest.send({
         user: user.publicData,

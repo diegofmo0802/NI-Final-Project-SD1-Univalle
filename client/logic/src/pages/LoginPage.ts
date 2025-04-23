@@ -4,7 +4,7 @@ import TextInput from "../components/basic.components/TextInput.js";
 import Button from "../components/basic.components/Button.js";
 import Loading from "../components/basic.components/Loading.js";
 import Api from "../api/Api.js";
-import app, { session } from "app.js";
+import app, { session } from "../app.js";
 
 export class LoginPage extends Component<'div', LoginPage.eventMap> {
     protected component: Element<"div">;

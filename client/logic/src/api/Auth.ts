@@ -10,11 +10,24 @@ export class Auth {
         });
         return await response.json();
     }
-    public static async register(username: string, email: string, password: string): Promise<Api.Response> {
+    public static async register(data: Auth.newUser): Promise<Api.Response> {
+        const formData = new FormData();
+        formData.append('type', data.type);
+        formData.append('username', data.username);
+        formData.append('email', data.email);
+        formData.append('password', data.password);
+        if (data.name) formData.append('name', data.name);
+        if (data.bio) formData.append('bio', data.bio);
+        if (data.avatar) formData.append('avatar', data.avatar);
+        if (data.phone) formData.append('phone', data.phone);
+        if (data.address) formData.append('address', data.address);
+
+        console.log(data.avatar?.size);
+
         const response = await fetch(`${this.BASE_URL}/register`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', },
-            body: JSON.stringify({ username, email, password }),
+            headers: { 'Content-Type': 'multipart/form-data', },
+            body: formData,
         });
         return await response.json();
     }
@@ -32,6 +45,17 @@ export class Auth {
     }
 }
 export namespace Auth {
-
+    export type userType = 'volunteer' | 'foundation';
+    export interface newUser {
+        type: userType;
+        username: string;
+        name?: string;
+        bio?: string;
+        avatar?: File;
+        email: string;
+        phone?: string;
+        address?: string;
+        password: string;
+    }
 }
 export default Auth;

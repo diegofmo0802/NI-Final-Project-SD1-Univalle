@@ -3,9 +3,12 @@ import Language from "../../language.js";
 import TextInput from "../basic.components/TextInput.js";
 import Button from "../basic.components/Button.js";
 import Loading from "../basic.components/Loading.js";
+import LiveImageInput from "../basic.components/LiveImageInput.js";
+import Api from "api/Api.js";
 
 export class RegisterPage extends Component<'div', RegisterPage.eventMap> {
     protected component: Element<"div">;
+    protected avatar: LiveImageInput;
     protected username: TextInput;
     protected email: TextInput;
     protected password: TextInput;
@@ -16,7 +19,12 @@ export class RegisterPage extends Component<'div', RegisterPage.eventMap> {
     public constructor() { super();
         const submit = new Button(Language.get('page.register.submit-button'));
         this.loadingComponent = new Loading('/client/assets/logo.svg');
-        this.component = Element.new('div', null, { class: 'login-page' });
+        this.component = Element.new('div', null, { class: 'form-page register-page' });
+        this.avatar = new LiveImageInput({
+            accept: ['jpeg', 'jpg', 'png'],
+            src: '/client/assets/logo.svg',
+            class: 'avatar-chooser'
+        });
         this.username = new TextInput({
             placeholder: Language.get('page.register.username-label'),
         });
@@ -37,7 +45,7 @@ export class RegisterPage extends Component<'div', RegisterPage.eventMap> {
             type: 'div', attribs: { class: 'form login-form' }, childs: [
                 { type: 'h2', text: Language.get('page.register.title') },
                 { type: 'div', attribs: { class: 'form-fields' }, childs: [
-                    this.username, this.email, this.password, this.confirmation
+                    this.avatar, this.username, this.email, this.password, this.confirmation
                 ] }, this.error, submit
             ]
         });
@@ -46,7 +54,13 @@ export class RegisterPage extends Component<'div', RegisterPage.eventMap> {
             const password = this.password.getText();
             const confirmation = this.confirmation.getText();
             if (password !== confirmation) return void this.showError(Language.get("page.register.error.password-no-match"));
-            this.dispatch('submit', this.username.getText(), this.email.getText(), this.password.getText());
+            this.dispatch('submit', {
+                type: 'volunteer',
+                avatar: this.avatar.getFile(),
+                username: this.username.getText(),
+                email: this.email.getText(),
+                password: this.password.getText()
+            });
         });
     }
     public showError(message?: string) {
@@ -59,7 +73,7 @@ export class RegisterPage extends Component<'div', RegisterPage.eventMap> {
     }
 }
 export namespace RegisterPage {
-    type submitEvent = (username: string, email: string, password: string) => void;
+    type submitEvent = (data: Api.auth.newUser) => void;
     export type eventMap = {
         submit: submitEvent;
     }

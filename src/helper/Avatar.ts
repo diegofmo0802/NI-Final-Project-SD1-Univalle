@@ -1,6 +1,5 @@
 import { randomUUID } from "crypto";
-import User from "../managers/UserManager/User.js";
-import { Image } from "./Image";
+import { Image } from "./Image.js";
 
 export class Avatar {
     /**

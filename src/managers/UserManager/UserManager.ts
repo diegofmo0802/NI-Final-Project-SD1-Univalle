@@ -4,9 +4,8 @@ import { user } from "../../config/dbScheme.js";
 import User from "./User.js";
 import Auth from "../../helper/Auth.js";
 import { CollectionSession, Schema } from "../../DBManager/Manager";
-import { Image } from "../../helper/Image.js";
 import ProjectDebug from "../../config/ProjectDebug.js";
-import Avatar from "helper/Avatar.js";
+import Avatar from "../../helper/Avatar.js";
 
 export class UserManager {
     public constructor(

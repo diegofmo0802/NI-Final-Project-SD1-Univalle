@@ -14,7 +14,7 @@ export class LoginPage extends Component<'div', LoginPage.eventMap> {
     public constructor() { super();
         const submit = new Button(Language.get('page.login.submit-button'));
         this.loadingComponent = new Loading('/client/assets/logo.svg');
-        this.component = Element.new('div', null, { class: 'login-page' });
+        this.component = Element.new('div', null, { class: 'form-page login-page' });
         this.username = new TextInput({
             placeholder: Language.get('page.login.username-label'),
         });

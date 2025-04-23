@@ -1,0 +1,11 @@
+.register-page {
+    .form-fields {
+        .avatar-chooser {
+            aspect-ratio: 1 / 1;
+            width: 50%;
+            label {
+                border-radius: 50%;
+            }
+        }
+    }
+}

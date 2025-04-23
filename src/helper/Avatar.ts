@@ -46,6 +46,17 @@ export class Avatar {
         return fs.readFile(Path);
     }
     /**
+     * Delete the avatar of the user
+     * @param userID - The id of the user
+     * @param avatarID - The id of the avatar
+     * @throws - If the avatar cannot be deleted
+     */
+    public static async delete(userID: string, avatarID: string): Promise<void> {
+        const Path = Avatar.getPath(userID, avatarID);
+        if (!await this.exist(userID, avatarID)) return;
+        await fs.rm(Path);
+    }
+    /**
      * Check if the avatar exists
      * @param userID - The id of the user
      * @param avatarID - The id of the avatar

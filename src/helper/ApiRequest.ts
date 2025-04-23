@@ -1,6 +1,6 @@
 import authManager from "../config/authManager.js";
 import ServerCore from "saml.servercore";
-import User from "./User.js";
+import User from "../managers/UserManager/User.js";
 
 export class ApiRequest {
     private sended: boolean = false;

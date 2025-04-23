@@ -9,12 +9,12 @@ export const user = new Schema({
         bio:      { type: 'string', nullable: true, default: null, minLength: 10, maxLength: 500 },
         avatar:   { type: 'string', default: '/client/assets/logo.svg' },
         // email:    { type: 'string', required: true, unique: true, minLength: 6, maxLength: 100 },
-        phone:    { type: 'string', nullable: true, default: null, unique: true, minLength: 10, maxLength: 10 },
+        phone:    { type: 'string', nullable: true, default: null, minLength: 10, maxLength: 10 },
         address:  { type: 'string', nullable: true, default: null, minLength: 10, maxLength: 200 },
     } },
     email: { type: 'object', required: true, schema: {
         address: { type: 'string', required: true, unique: true, minLength: 6, maxLength: 100 },
-        verified: { type: 'boolean', required: true, default: false },
+        verified: { type: 'boolean', default: false },
         verifyToken: { type: 'string', nullable: true, default: null }
     } },
     auth: { type: 'object', required: true, schema: {

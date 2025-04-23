@@ -78,7 +78,6 @@ export class UserManager {
         }
 
         return this.collection.transaction(async (db, collection) => {
-            console.log(collection.Schema);
             await collection.insertOne({
                 _id: uuid,
                 profile: {
@@ -95,7 +94,7 @@ export class UserManager {
                 email: { address: data.email },
                 auth: { passwordHash: hash, passwordSalt: salt }
             });
-            const user = await collection.findOne({ _id: uuid }, { projection: { _id: 1 } });
+            const user = await collection.findOne({ _id: uuid });
             if (!user) throw new Error('could not create user');
             return new User(this, user);
         });

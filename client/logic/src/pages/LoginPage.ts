@@ -1,8 +1,10 @@
-import { Component, Element } from "../../WebApp/WebApp.js";
-import Language from "../../language.js";
-import TextInput from "../../components/basic.components/TextInput.js";
-import Button from "../../components/basic.components/Button.js";
-import Loading from "../../components/basic.components/Loading.js";
+import { Component, Element } from "../WebApp/WebApp.js";
+import Language from "../helper/language.js";
+import TextInput from "../components/basic.components/TextInput.js";
+import Button from "../components/basic.components/Button.js";
+import Loading from "../components/basic.components/Loading.js";
+import Api from "api/Api.js";
+import app, { session } from "app.js";
 
 export class LoginPage extends Component<'div', LoginPage.eventMap> {
     protected component: Element<"div">;
@@ -33,7 +35,7 @@ export class LoginPage extends Component<'div', LoginPage.eventMap> {
         });
         this.component.append(this.form);
         submit.on('click', () => {
-            this.dispatch('submit', this.username.getText(), this.password.getText());
+            this.dispatch('submit', this.username.getText(), this.password.getText());            
         });
     }
     public showError(message?: string) {
@@ -44,11 +46,22 @@ export class LoginPage extends Component<'div', LoginPage.eventMap> {
         if (loading) this.loadingComponent.spawn(this.form);
         else this.loadingComponent.finish();
     }
+    public async submit(username: string, password: string) {
+        this.loading(true);
+        this.showError();
+        const response = await Api.auth.login(username, password);
+        if (!response.success) this.showError(response.reason);
+        else {
+            session.loadSession(response.result.user);
+            app.router.setPage('/app');
+        }
+        this.loading(false);
+    }
 }
 export namespace LoginPage {
-    type submitEvent = (username: string, password: string) => void;
+    export type submitEvent = (username: string, password: string) => void;
     export type eventMap = {
-        submit: submitEvent;
+        submit: submitEvent
     }
 }
 export default LoginPage

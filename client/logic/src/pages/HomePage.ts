@@ -1,6 +1,6 @@
-import { Component, Element } from "../../WebApp/WebApp.js";
-import Language from "../../language.js";
-import BasicCard from "../utilities/BasicCard.js";
+import { Component, Element } from "../WebApp/WebApp.js";
+import Language from "../helper/language.js";
+import BasicCard from "../components/utilities/BasicCard.js";
 
 export class HomePage extends Component<'div'> {
     protected component: Element<"div">;

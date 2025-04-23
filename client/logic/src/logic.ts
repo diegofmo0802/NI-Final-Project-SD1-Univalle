@@ -1,8 +1,8 @@
-import app, { session } from './app.js';
+import app, { loading, session } from './app.js';
 import { components, schema } from './config.js';
-import { HomePage } from './components/pages/HomePage.js';
-import LoginPage from './components/pages/LoginPage.js';
-import RegisterPage from './components/pages/RegisterPage.js';
+import HomePage from './pages/HomePage.js';
+import LoginPage from './pages/LoginPage.js';
+import RegisterPage from './pages/RegisterPage.js';
 import Api from './api/Api.js';
 
 ///@ts-ignore
@@ -34,15 +34,7 @@ app.addRender('/app/login', () => {
     components.content.clean();
     const form = new LoginPage();
     form.on('submit', async (username, password) => {
-        form.loading(true);
-        form.showError();
-        const response = await Api.auth.login(username, password);
-        if (!response.success) form.showError(response.reason);
-        else {
-            session.loadSession(response.result.user);
-            app.router.setPage('/app');
-        }
-        form.loading(false);
+        form.submit(username, password);
     });
     components.content.append(form);
 });

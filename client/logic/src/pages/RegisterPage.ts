@@ -1,9 +1,9 @@
-import { Component, Element } from "../../WebApp/WebApp.js";
-import Language from "../../language.js";
-import TextInput from "../basic.components/TextInput.js";
-import Button from "../basic.components/Button.js";
-import Loading from "../basic.components/Loading.js";
-import LiveImageInput from "../basic.components/LiveImageInput.js";
+import { Component, Element } from "../WebApp/WebApp.js";
+import Language from "../helper/language.js";
+import TextInput from "../components/basic.components/TextInput.js";
+import Button from "../components/basic.components/Button.js";
+import Loading from "../components/basic.components/Loading.js";
+import LiveImageInput from "../components/basic.components/LiveImageInput.js";
 import Api from "api/Api.js";
 
 export class RegisterPage extends Component<'div', RegisterPage.eventMap> {

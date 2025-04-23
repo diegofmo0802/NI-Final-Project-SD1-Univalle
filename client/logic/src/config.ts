@@ -1,4 +1,4 @@
-import Language from "./language.js";
+import Language from "./helper/language.js";
 import { Element } from "./WebApp/WebApp.js";
 import { Menu } from "./components/Menu.js";
 import { session } from "./app.js";

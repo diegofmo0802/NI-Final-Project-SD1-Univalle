@@ -46,9 +46,9 @@ export class Image {
         return null;
     }
     /**
-     * check if the Buffer data belongs to a jpg file
-     * @param data the file data Buffer
-     * @returns true if is a jpg file or false if not is a jpg file
+     * Check if the Buffer data belongs to a jpg file
+     * @param data The file data Buffer
+     * @returns True if is a jpg file or false if not is a jpg file
      */
     public static isImageFile(data: Buffer, validFormats: ('jpg'|'jpeg'|'png'|'gif')[] = ['jpg', 'jpeg']): boolean {
         let result: boolean = false;
@@ -60,6 +60,14 @@ export class Image {
         }
         return result;
     }
+    /**
+     * Saves an image to the specified folder with the given name.
+     * @param folder The folder path where the image should be saved.
+     * @param name The name of the image file.
+     * @param data The image data as a Buffer.
+     * @returns A Promise that resolves with the full path to the saved image file.
+     * @throws Throws an error if the image cannot be saved.
+     */
     public static async saveImage(folder: string, name: string, data: Buffer): Promise<string> {
         folder = Utilities.Path.normalize(folder);
         folder = folder.endsWith('/') ? folder : folder + '/';
@@ -69,6 +77,6 @@ export class Image {
             await mkdir(folder, { recursive: true });
             await fs.writeFile(path, data);
             return path;
-        } catch { throw Error(`fail saving image on: ${path}`); }
+        } catch(error) { throw Error(`fail saving image on: ${path}`, { cause: error }); }
     }
 }

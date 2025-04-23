@@ -6,6 +6,7 @@ import Auth from "../../helper/Auth.js";
 import { CollectionSession, Schema } from "../../DBManager/Manager";
 import { Image } from "../../helper/Image.js";
 import ProjectDebug from "../../config/ProjectDebug.js";
+import Avatar from "helper/Avatar.js";
 
 export class UserManager {
     public constructor(
@@ -17,19 +18,19 @@ export class UserManager {
     
     public async getUserById(uuid: string): Promise<User | null> {
         return this.collection.operation(async (db, collection) => {
-            const result = await collection.findOne({ _id: uuid }, { projection: { _id: 1 } });
+            const result = await collection.findOne({ _id: uuid });
             return result ? new User(this, result) : null;
         });
     }
     public async getUserByEmail(email: string): Promise<User | null> {
         return this.collection.operation(async (db, collection) => {
-            const result = await collection.findOne({ 'email.address': email }, { projection: { _id: 1 } });
+            const result = await collection.findOne({ 'email.address': email });
             return result ? new User(this, result) : null;
         });
     }
     public async getUserByUsername(username: string): Promise<User | null> {
         return this.collection.operation(async (dn, collection) => {
-            const result = await collection.findOne({ 'profile.username': username }, { projection: { _id: 1 } });
+            const result = await collection.findOne({ 'profile.username': username });
             return result ? new User(this, result) : null;
         });
     }
@@ -69,9 +70,8 @@ export class UserManager {
         let avatar: string | null = null;
         if (data.avatar != null) {
             try {
-                const avatarID = randomUUID();
-                await Image.saveImage(`.data/avatar/${uuid}/`, avatarID, data.avatar);
-                avatar = `/api/user/${uuid}/avatar/${avatarID}`;
+                const avatarID = await Avatar.save(uuid, data.avatar);
+                avatar = Avatar.getUrl(uuid, avatarID);
             } catch (error) {
                 ProjectDebug.error(error);
                 return 'api.auth.register.avatar-error';

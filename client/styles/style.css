@@ -15,6 +15,7 @@ body {
     width: 100%;
     z-index: 6;
     > .Logo {
+        color: var(--light-bg);
         cursor: pointer;
         flex: 0 0 auto;
         height: 3rem;

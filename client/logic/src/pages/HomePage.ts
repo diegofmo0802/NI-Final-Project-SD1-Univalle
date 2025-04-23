@@ -14,3 +14,5 @@ export class HomePage extends Component<'div'> {
         );
     }
 }
+export namespace HomePage {}
+export default HomePage;

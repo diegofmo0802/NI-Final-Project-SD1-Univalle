@@ -18,6 +18,6 @@
   },
   "dependencies": {
     "mongodb": "^6.15.0",
-    "saml.servercore": "^3.7.0-Dev.13"
+    "saml.servercore": "^3.7.0-Dev.14"
   }
 }

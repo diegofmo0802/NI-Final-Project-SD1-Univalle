@@ -33,26 +33,14 @@ app.addRender('/app/', () => {
 app.addRender('/app/login', () => {
     components.content.clean();
     const form = new LoginPage();
-    form.on('submit', async (username, password) => {
-        form.submit(username, password);
-    });
+    form.on('submit', async (username, password) => form.submit(username, password));
     components.content.append(form);
 });
 
 app.addRender('/app/register', () => {
     components.content.clean();
     const form = new RegisterPage();
-    form.on('submit', async (data) => {
-        form.loading(true);
-        form.showError();
-        const response = await Api.auth.register(data);
-        if (!response.success) form.showError(response.reason);
-        else {
-            session.loadSession(response.result.user);
-            app.router.setPage('/app');
-        }
-        form.loading(false);
-    });
+    form.on('submit', async (data) => form.submit(data));
     components.content.append(form);
 });
 

@@ -69,7 +69,10 @@ class Profile extends Component<'div', Profile.eventMap> {
     protected edit() {
         if (!this._user) return;
         const editProfile = new EditProfile(this._user);
-        editProfile.on('save', (values) => this.dispatch('edit', values));
+        editProfile.on('save', (values) => {
+            editProfile.getComponent().replaceWith(this.component);
+            this.dispatch('edit', values)
+        });
         editProfile.on('cancel', () => {
             editProfile.getComponent().replaceWith(this.component);
         });

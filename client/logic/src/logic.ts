@@ -4,6 +4,9 @@ import HomePage from './pages/HomePage.js';
 import LoginPage from './pages/LoginPage.js';
 import RegisterPage from './pages/RegisterPage.js';
 import Api from './api/Api.js';
+import UserListPage from './pages/UserListPage.js';
+import Auth from './helper/Auth.js';
+import App from 'WebApp/WebApp.js';
 
 ///@ts-ignore
 window.api = Api;
@@ -44,6 +47,16 @@ app.addRender('/app/register', () => {
     components.content.append(form);
 });
 
+app.addRender('/app/users', async () => {
+    components.content.clean();
+    if (!await Auth.checkAuth()) return void app.router.setPage('/app/login');
+    const userListPage = new UserListPage();
+    userListPage.loadUsers();
+    components.content.append(userListPage);
+    loading.finish();
+});
+
 components.menu.on('home', () => app.router.setPage('/app'));
+components.menu.on('users', () => app.router.setPage('/app/users'));
 
 app.init();

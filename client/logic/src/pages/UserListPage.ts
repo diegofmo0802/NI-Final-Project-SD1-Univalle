@@ -1,6 +1,7 @@
-import Api from '../api/Api.js';
-import UserList from '../components/utilities/UserList.js';
 import { Component, Element } from '../WebApp/WebApp.js';
+import UserList from '../components/utilities/UserList.js';
+import app from '../app.js';
+import Api from '../api/Api.js';
 
 export class UserListPage extends Component<'div'> {
     protected component: Element<'div'>;
@@ -11,6 +12,9 @@ export class UserListPage extends Component<'div'> {
     { super();
         this.userList = new UserList;
         this.component = Element.new('div', null, { class: 'userList-page' }).append(this.userList);
+        this.userList.on('select', async (user) => {
+            app.router.setPage(`/app/user/${user._id}`);
+        });
         this.userList.on('end', async () => {
             await this.loadUsers();
         });

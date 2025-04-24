@@ -12,6 +12,9 @@ export class ProfilePage extends Component<'div'> {
     public async load(uuid: string) {
         const user = await Api.user.get(uuid);
         this.profile = new Profile(user, this.isOwner(user));
+        this.profile.on('edit', (values) => {
+            console.log('[edit]: edited values:', values)
+        });
         this.component.clean();
         this.component.append(this.profile);
     }

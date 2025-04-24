@@ -1,0 +1,49 @@
+.share {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #00000088;
+    z-index: 1000;
+    > .close {
+        position: absolute;
+        top: 2%;
+        right: 2%;
+        border-radius: 50%;
+        padding: 2%;
+        border: #FFFFFF solid 1px;
+        background: #FF446C;
+        color: #000000;
+        cursor: pointer;
+    }
+    > .qr-code {
+        width: 40%;
+        min-width: 200px;
+        max-width: 300px;
+    }
+    > .url-text {
+        background: #FFB4FC;
+        color: #000000;
+        padding: 0.5em;
+        margin: 0.5em;
+        user-select: all;
+    }
+}
+
+
+@media (max-width: 300px) {
+    .profile > {
+        > .share-window {
+            > .qr-code {
+                min-width: auto;
+                overflow: hidden;
+                width: 95%;
+            }
+        }
+    }
+}

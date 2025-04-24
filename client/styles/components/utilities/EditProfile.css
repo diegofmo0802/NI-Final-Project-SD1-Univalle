@@ -1,0 +1,32 @@
+.edit-profile {
+    > .profile-avatar {
+        padding: 0;
+    }
+    > .profile-name > input,
+    > .profile-username > input,
+    > .profile-biography > textarea {
+        text-align: center;
+        border: none;
+        background: #00000011;
+        border-radius: 0.25rem;
+        padding: 0.2em;
+        margin: 0;
+    }
+    > .profile-name > input {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    > .profile-biography > textarea {
+        overflow: auto;
+        min-height: 1lh;
+        resize: vertical;
+    }
+    > .profile-options {
+        > .save-button {
+            background-color: #288e28;
+        }
+        > .cancel-button {
+            background-color: #982c2c;
+        }
+    }
+}

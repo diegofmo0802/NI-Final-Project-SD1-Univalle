@@ -53,7 +53,6 @@ app.addRender('/app/users', async () => {
     const userListPage = new UserListPage();
     userListPage.loadUsers();
     components.content.append(userListPage);
-    loading.finish();
 });
 
 components.menu.on('home', () => app.router.setPage('/app'));

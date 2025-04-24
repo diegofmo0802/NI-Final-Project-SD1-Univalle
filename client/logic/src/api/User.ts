@@ -1,5 +1,13 @@
 export class User {
     public static BASE_URL = '/api/user';
+    public static async get(id: string): Promise<User.visible> {
+        const response = await fetch(`${this.BASE_URL}/${id}`, { method: 'GET' });
+        const data = await response.json();
+        if (response.ok) {
+            if (data.success) return data.result;
+            else throw new Error(data.reason);
+        } else throw new Error(data.reason);
+    }
     public static async getAll(page: number, limit: number = 10): Promise<{
         page: number; limit: number; count: number;
         users: User.visible[]

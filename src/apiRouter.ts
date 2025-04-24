@@ -27,15 +27,16 @@ export function addApiRoutes(server: ServerCore) {
     server.addAction('GET', route('user/$uuid/avatar/$avatarID'), (request, response) => {
         userRule.getAvatar(new ApiRequest(request, response));
     });
+    server.addAction('GET', route('user/$uuid'), (request, response) => {
+        userRule.getUser(new ApiRequest(request, response));
+    });
     server.addAction('GET', '/api/user/', (request, response) => {
         userRule.getUsers(new ApiRequest(request, response));
     });
     // All other routes
     server.addAction('GET', route('*'), (request, response) => {
-        response.sendJson({
-            message: 'router not found',
-            route: `[${request.method}] -> ${request.url}`
-        });
+        const apiRequest = new ApiRequest(request, response);
+        apiRequest.sendError(`No router fount to ${request.method} -> ${request.url}`, 404);
     });
 }
 export default addApiRoutes;

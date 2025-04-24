@@ -11,6 +11,15 @@ export async function getAvatar(apiRequest: ApiRequest) {
     return apiRequest.sendCustom(avatar);
 }
 
+export async function getUser(apiRequest: ApiRequest) {
+    const { uuid } = apiRequest.ruleParams;
+    if (uuid == null) return apiRequest.sendError('missing arguments', 400);
+    const user = await userManager.getUserById(uuid);
+    if (user == null) return apiRequest.sendError('user not found', 404);
+    return apiRequest.send(user.publicData);
+}
+
+
 export async function getUsers(apiRequest: ApiRequest) {
     const pageParam = apiRequest.ruleParams.Page ?? apiRequest.searchParams.get('page');
     const limitParam = apiRequest.searchParams.get('limit');

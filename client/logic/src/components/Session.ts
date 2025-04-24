@@ -4,18 +4,19 @@ import Api from '../api/Api.js';
 class Session extends Component<'div', Session.EventMap> {
     protected component: Element<'div'>;
     protected options: Element<'div'> | undefined;
-    protected user: Api.user.visible | undefined;
+    protected _user: Api.user.visible | undefined;
     
     /**
      * Creates a new Session instance.
      * @param user - The user associated with the session. If provided, the session will be loaded for this user.
      */
     public constructor(user?: Api.user.visible) { super();
-        this.user = user;
+        this._user = user;
         this.component = Element.new('div').setAttribute('class', 'session off-session');
         user ? this.loadSession(user) : this.close();
         this.setupEventListeners();
     }
+    public get user(): Api.user.visible | undefined { return this._user; }
     protected setupEventListeners() {
         this.component.on('click', () => this.toggleOptions());
         this.component.on('mouseleave', () => this.hideOptions());
@@ -33,7 +34,7 @@ class Session extends Component<'div', Session.EventMap> {
      */
     public loadSession(user: Api.user.visible) {
         this.clearComponent();
-        this.user = user;
+        this._user = user;
         this.renderLoggedInState();
     }
     protected clearComponent() {
@@ -58,8 +59,8 @@ class Session extends Component<'div', Session.EventMap> {
         this.component.setAttribute('class', 'session on-session');
         this.component.append(
             { type: 'div', attribs: { class: 'session-user' }, childs: [
-                { type: 'img', attribs: { class: 'avatar', src: this.user?.profile.avatar ?? '/client/assets/logo.svg' } },
-                { type: 'p', text: this.user?.profile.username }
+                { type: 'img', attribs: { class: 'avatar', src: this._user?.profile.avatar ?? '/client/assets/logo.svg' } },
+                { type: 'p', text: this._user?.profile.username }
             ] }, this.options
         );
     }

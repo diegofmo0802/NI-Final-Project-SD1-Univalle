@@ -40,6 +40,10 @@ export class LiveImageInput extends Component<'div', LiveImageInput.EventMap> {
         .append(this.label, this.inputFile);
         if (options.id) this.component.setAttribute('id', options.id);
     }
+    public get src(): string { return this.preview.getAttribute('src') ?? ''; }
+    public set src(src: string) {
+        this.preview.setAttribute('src', src);
+    }
     protected loadPreview(): void {
         const file = this.inputFile.HTMLElement.files?.[0];
         if (!file) {

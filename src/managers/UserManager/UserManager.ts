@@ -33,15 +33,16 @@ export class UserManager {
             return result ? new User(this, result) : null;
         });
     }
-    public async getUsers(page: number, limit: number): Promise<User.data[]> {
+    public async getUsers(page: number, limit: number): Promise<User[]> {
         const skip = (page - 1) * limit;
-        return await this.collection.operation(async (db, collection) => {
+        const result = await this.collection.operation(async (db, collection) => {
             return await collection.aggregate<User.data>([
                 { $match: {} },
                 { $skip: skip },
                 { $limit: limit },
             ]);
         });
+        return result.map((document) => new User(this, document));
     }
     public async createUser(data: User.newUser): Promise<User | string> {
         /* Checking if the username is already in use */

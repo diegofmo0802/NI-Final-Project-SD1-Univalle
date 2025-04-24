@@ -40,10 +40,15 @@ export class EditProfile extends Component<'div', EditProfile.eventMap> {
     }
     protected getValues() {
         const values: EditProfile.Values = {};
-        if (this.avatar.getFile()) values.avatar = this.avatar.getFile();
-        if (this.name.value !== this.user.profile.name) values.name = this.name.value;
-        if (this.biography.value !== this.user.profile.bio) values.biography = this.biography.value;
-        if (this.username.value !== this.user.profile.username) values.username = this.username.value;
+        const { user: { profile } } = this;
+        const avatar    = this.avatar.getFile();
+        const name      = this.name.value      || null;
+        const biography = this.biography.value || null;
+        const username  = this.username.value  || null;
+        if (avatar)                        values.avatar = avatar;
+        if (name !== profile.name)         values.name = name;
+        if (biography !== profile.bio)     values.biography = biography;
+        if (username !== profile.username) values.username = username;
         return values;
     }
 }
@@ -51,9 +56,9 @@ export class EditProfile extends Component<'div', EditProfile.eventMap> {
 export namespace EditProfile {
     export interface Values {
         avatar?: File;
-        name?: string;
-        biography?: string;
-        username?: string;
+        name?: string | null;
+        biography?: string | null;
+        username?: string | null;
     }
     export type SaveListener = (values: Values) => void;
     export type CancelListener = () => void;

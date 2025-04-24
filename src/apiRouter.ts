@@ -27,6 +27,9 @@ export function addApiRoutes(server: ServerCore) {
     server.addAction('GET', route('user/$uuid/avatar/$avatarID'), (request, response) => {
         userRule.getAvatar(new ApiRequest(request, response));
     });
+    server.addAction('GET', '/api/user/', (request, response) => {
+        userRule.getUsers(new ApiRequest(request, response));
+    });
     // All other routes
     server.addAction('GET', route('*'), (request, response) => {
         response.sendJson({

@@ -1,5 +1,16 @@
 export class User {
-
+    public static BASE_URL = '/api/user';
+    public static async getAll(page: number, limit: number = 10): Promise<{
+        page: number; limit: number; count: number;
+        users: User.visible[]
+    }> {
+        const response = await fetch(`${this.BASE_URL}/?page=${page}&limit=${limit}`, { method: 'GET' });
+        const data = await response.json();
+        if (response.ok) {
+            if (data.success) return data.result;
+            else throw new Error(data.reason);
+        } else throw new Error(data.reason);
+    }
 }
 export namespace User {
     export interface Profile {

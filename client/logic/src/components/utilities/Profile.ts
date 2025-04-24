@@ -5,7 +5,7 @@ import Language from "../../helper/language.js";
 import Api from "../../api/Api.js";
 import EditProfile from "./EditProfile.js";
 
-class Profile extends Component<'div'> {
+class Profile extends Component<'div', Profile.eventMap> {
     protected component: Element<"div">;
     protected _user: Api.user.visible;
     protected _owner: boolean;
@@ -69,7 +69,7 @@ class Profile extends Component<'div'> {
     protected edit() {
         if (!this._user) return;
         const editProfile = new EditProfile(this._user);
-        editProfile.on('save', (values) => this.dispatch('save', values));
+        editProfile.on('save', (values) => this.dispatch('edit', values));
         editProfile.on('cancel', () => {
             editProfile.getComponent().replaceWith(this.component);
         });

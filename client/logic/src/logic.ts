@@ -6,7 +6,7 @@ import RegisterPage from './pages/RegisterPage.js';
 import Api from './api/Api.js';
 import UserListPage from './pages/UserListPage.js';
 import Auth from './helper/Auth.js';
-import App from 'WebApp/WebApp.js';
+import ProfilePage from './pages/ProfilePage.js';
 
 ///@ts-ignore
 window.api = Api;
@@ -17,6 +17,10 @@ session.on('login', () => app.router.setPage('/app/login'));
 session.on('register', () => app.router.setPage('/app/register'));
 session.on('option', async (option) => {
     switch(option) {
+        case 'profile': {
+            if (session.user) app.router.setPage(`/app/user/${session.user._id}`);
+            else app.router.setPage('/app/login'); break;
+        }
         case 'logout': {
             const response = await Api.auth.logout();
             if (!response.success) return void alert('fail to log-out');
@@ -47,7 +51,7 @@ app.addRender('/app/register', () => {
     components.content.append(form);
 });
 
-app.addRender('/app/users', async () => {
+app.addRender('/app/user', async () => {
     components.content.clean();
     if (!await Auth.checkAuth()) return void app.router.setPage('/app/login');
     const userListPage = new UserListPage();
@@ -55,7 +59,16 @@ app.addRender('/app/users', async () => {
     components.content.append(userListPage);
 });
 
+app.addRender('/app/user/$uuid', async ({ uuid }) => {
+    if (!uuid) return void app.router.setPage('/app/user');
+    components.content.clean();
+    if (!await Auth.checkAuth()) return void app.router.setPage('/app/login');
+    const profile = new ProfilePage();
+    await profile.load(uuid);
+    components.content.append(profile);
+});
+
 components.menu.on('home', () => app.router.setPage('/app'));
-components.menu.on('users', () => app.router.setPage('/app/users'));
+components.menu.on('users', () => app.router.setPage('/app/user'));
 
 app.init();

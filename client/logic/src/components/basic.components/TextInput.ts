@@ -45,6 +45,8 @@ export class TextInput extends Component<'div', TextInput.EventMap> {
             if (event.key == 'Enter') this.send();
         });
     }
+    public get value(): string { return this.inputText.HTMLElement.value; }
+    public set value(value: string) { this.inputText.HTMLElement.value = value; }
     protected send(): void {
         const text = this.getText();
         if (this.validator(text)) this.dispatch('send', text);

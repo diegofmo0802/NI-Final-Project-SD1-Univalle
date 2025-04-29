@@ -3,7 +3,7 @@ import { user } from "../../config/dbScheme.js";
 import UserManager from "./UserManager.js";
 
 export class User implements User.data {
-    public readonly _id!: string;
+    public readonly _id: string;
     protected readonly userManager: UserManager;
     protected _profile!: User.profile;
     protected _email!: User.email;
@@ -13,6 +13,7 @@ export class User implements User.data {
     protected toUpdate!: User.updateData;
     public constructor(userManager: UserManager, data: User.data) {
         this.userManager = userManager;
+        this._id = data._id;
         this.setData(data);
     }
     /**

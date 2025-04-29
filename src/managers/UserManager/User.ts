@@ -3,42 +3,66 @@ import { user } from "../../config/dbScheme.js";
 import UserManager from "./UserManager.js";
 
 export class User implements User.data {
-    public readonly _id: string;
+    public readonly _id!: string;
     protected readonly userManager: UserManager;
-    protected _profile: User.profile;
-    protected _email: User.email;
-    protected _auth: User.auth;
-    protected _config: User.config;
-    protected _permissions: User.Permission;
+    protected _profile!: User.profile;
+    protected _email!: User.email;
+    protected _auth!: User.auth;
+    protected _config!: User.config;
+    protected _permissions!: User.Permission;
+    protected toUpdate!: User.updateData;
     public constructor(userManager: UserManager, data: User.data) {
         this.userManager = userManager;
-        this._id = data._id;
+        this.setData(data);
+    }
+    /**
+     * Set data for the user.
+     * @param data - The data to set.
+     */
+    protected setData(data: User.data): void {
         this._profile = data.profile;
         this._email = data.email;
         this._auth = data.auth;
         this._config = data.config;
         this._permissions = data.permissions;
+        this.toUpdate = {};
     }
     public get profile(): User.profile { return this._profile; }
     public get auth(): User.auth { return this._auth; }
     public get email(): User.email { return this._email; }
     public get config(): User.config { return this._config; }
     public get permissions(): User.Permission { return this._permissions; }
+    public set profile(profile: Partial<User.profile>) { this.toUpdate.profile = profile; }
+    public set auth(auth: Partial<User.auth>) { this.toUpdate.auth = auth; }
+    public set email(email: Partial<User.email>) { this.toUpdate.email = email; }
+    public set config(config: Partial<User.config>) { this.toUpdate.config = config; }
+    public set permissions(permissions: Partial<User.Permission>) { this.toUpdate.permissions = permissions; }
     public get publicData(): User.publicData {
-        return {
-            _id: this._id,
-            profile: this._profile,
-            email: this._email,
-            config: this._config,
-            permissions: this._permissions,
-        };
+        const { _id, profile, email, config, permissions } = this;
+        return { _id, profile, email, config, permissions };
     }
-    public update(value: User.updateData): Promise<User.data | null> {
-        return this.userManager.collection.transaction(async (db, collection) => {
-            const toUpdate = Utilities.flattenObject(value);
+    /**
+     * Check if there are any changes to the database.
+     * @returns true if there are changes, false otherwise.
+     */
+    public needUpdate(): boolean { return Object.keys(this.toUpdate).length > 0; }
+    /**
+     * Cancel changes to the database.
+     */
+    public cancelChanges(): void { this.toUpdate = {}; }
+    /**
+     * Save changes to the database.
+     * @throws Error if user not found or failed to update.
+     */
+    public async saveChanges(): Promise<this> {
+        if (!this.needUpdate()) return this;
+        return await this.userManager.collection.transaction(async (db, collection) => {
+            const toUpdate = Utilities.flattenObject(this.toUpdate);
             const update = await collection.updateOne({ _id: this._id }, { $set: toUpdate });
-            const user = await collection.findOne({ _id: update.upsertedId ?? this._id });
-            return user ? user : null;
+            const newData = await collection.findOne({ _id: update.upsertedId ?? this._id });
+            if (!newData) throw new Error('User not found');
+            this.setData(newData);
+            return this;
         });
     }
 }

@@ -80,3 +80,4 @@ export class Image {
         } catch(error) { throw Error(`fail saving image on: ${path}`, { cause: error }); }
     }
 }
+export default Image;

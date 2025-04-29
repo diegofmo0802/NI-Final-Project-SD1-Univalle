@@ -1,6 +1,7 @@
 import authManager from "../config/authManager.js";
 import ServerCore from "saml.servercore";
 import User from "../managers/UserManager/User.js";
+import AuthManager from "managers/AuthManager.js";
 
 export class ApiRequest {
     private sended: boolean = false;
@@ -21,7 +22,7 @@ export class ApiRequest {
             expires: info.valid ? new Date(info.content.expire) : undefined
         });
     }
-    public sendCustom<result>(data: string | Buffer, code: number = 200): void {
+    public sendCustom(data: string | Buffer, code: number = 200): void {
         if (this.sended) throw new Error("Response already sended");
         this.sended = true;
         this.response.send(data);
@@ -67,6 +68,13 @@ export class ApiRequest {
     }
     public generateSessionToken(user: User) {
         return authManager.generateSessionToken(user._id);
+    }
+    public get session(): AuthManager.Session | null {
+        const token = this.authToken;
+        if (token == null) return null;
+        const info = authManager.parseSessionToken(token);
+        if (!info.valid) return null;
+        return info;
     }
 }
 

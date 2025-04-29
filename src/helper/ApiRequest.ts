@@ -8,21 +8,11 @@ export class ApiRequest {
         public readonly request: ServerCore.Request,
         private readonly response: ServerCore.Response
     ) {}
-    public get ruleParams(): ServerCore.Rule.ruleParams {
-        return this.request.ruleParams;
-    }
-    public get searchParams(): ServerCore.Request.GET {
-        return this.request.queryParams;
-    }
-    public get post(): Promise<ServerCore.Request.POST> {
-        return this.request.post;
-    }
-    public get cookies(): ServerCore.Cookie {
-        return this.request.cookies;
-    }
-    public get authToken(): string | null {
-        return this.cookies.get('auth-token') ?? null;
-    }
+    public get ruleParams(): ServerCore.Rule.ruleParams { return this.request.ruleParams; }
+    public get searchParams(): ServerCore.Request.SearchParams { return this.request.searchParams; }
+    public get post(): Promise<ServerCore.Request.BodyParser.Body> { return this.request.post; }
+    public get cookies(): ServerCore.Cookie { return this.request.cookies; }
+    public get authToken(): string | null { return this.cookies.get('auth-token') ?? null; }
     public set authToken(token: string | null) {
         if (!token) { this.cookies.delete('auth-token'); return; }
         const info = authManager.parseSessionToken(token);

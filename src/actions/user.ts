@@ -21,8 +21,8 @@ export async function getUser(apiRequest: ApiRequest) {
 
 
 export async function getUsers(apiRequest: ApiRequest) {
-    const pageParam = apiRequest.ruleParams.Page ?? apiRequest.searchParams.get('page');
-    const limitParam = apiRequest.searchParams.get('limit');
+    const pageParam = apiRequest.ruleParams.Page ?? apiRequest.searchParams.page;
+    const limitParam = apiRequest.searchParams.limit;
     if (!pageParam) return apiRequest.sendError('no page provided');
     if (!limitParam) return apiRequest.sendError('no limit provided');
     const page = parseInt(pageParam);

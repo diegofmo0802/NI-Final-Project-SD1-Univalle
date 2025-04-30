@@ -116,6 +116,10 @@ export class UserManager {
         if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) return { valid: false, reason: 'email is invalid' };
         return { valid: true };
     }
+    public isValidPhone(phone: string): UserManager.validatorResponse {
+        if (!/^\d{10}$/.test(phone)) return { valid: false, reason: 'phone is invalid' };
+        return { valid: true };
+    }
     public isValidBio(bio: string): UserManager.validatorResponse {
         if (bio.length > 500) return { valid: false, reason: 'bio is too long, max 500 chars' };
         return { valid: true };

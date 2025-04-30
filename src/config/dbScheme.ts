@@ -6,7 +6,7 @@ export const user = new Schema({
         type: { type: 'string', required: true, enum: ['volunteer', 'foundation'], default: 'volunteer' },
         username: { type: 'string', required: true, unique: true, minLength: 3, maxLength: 20 },
         name:     { type: 'string', nullable: true, default: null, minLength: 3, maxLength: 80 },
-        bio:      { type: 'string', nullable: true, default: null, minLength: 10, maxLength: 500 },
+        bio:      { type: 'string', nullable: true, default: null, maxLength: 500 },
         avatar:   { type: 'string', default: '/client/assets/logo.svg' },
         // email:    { type: 'string', required: true, unique: true, minLength: 6, maxLength: 100 },
         phone:    { type: 'string', nullable: true, default: null, minLength: 10, maxLength: 10 },

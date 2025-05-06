@@ -10,7 +10,7 @@ export class User implements User.data {
     protected _auth!: User.auth;
     protected _config!: User.config;
     protected _permissions!: User.Permission;
-    protected toUpdate!: User.updateData;
+    public toUpdate!: User.updateData;
     public constructor(userManager: UserManager, data: User.data) {
         this.userManager = userManager;
         this._id = data._id;
@@ -21,11 +21,11 @@ export class User implements User.data {
      * @param data - The data to set.
      */
     protected setData(data: User.data): void {
-        this._profile = data.profile;
-        this._email = data.email;
-        this._auth = data.auth;
-        this._config = data.config;
-        this._permissions = data.permissions;
+        this._profile = this.makeProxy('profile', data.profile);
+        this._email = this.makeProxy('email', data.email);
+        this._auth = this.makeProxy('auth', data.auth);
+        this._config = this.makeProxy('config', data.config);
+        this._permissions = this.makeProxy('permissions', data.permissions);
         this.toUpdate = {};
     }
     public get profile(): User.profile { return this._profile; }
@@ -64,6 +64,26 @@ export class User implements User.data {
             if (!newData) throw new Error('User not found');
             this.setData(newData);
             return this;
+        });
+    }
+    /**
+     * Wrap an object in a proxy to detect property changes and track updates.
+     * @param key - The key associated with the update.
+     * @param value - The object to wrap in a proxy.
+     * @returns A proxied version of the object.
+     */
+    private makeProxy<T extends object>(key: keyof User.updateData, value: T): T {
+        const self = this;
+        return new Proxy(value, {
+            set(target, prop: string, value) {
+                const current = target[prop as keyof T];
+                if (current !== value) {
+                    target[prop as keyof T] = value;
+                    if (!self.toUpdate[key] && key !== '_id') self.toUpdate[key] = {};
+                    (self.toUpdate[key] as any)[prop] = value;
+                }
+                return true;
+            }
         });
     }
 }

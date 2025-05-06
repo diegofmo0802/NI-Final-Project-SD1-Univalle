@@ -1,3 +1,5 @@
+import Auth from "./Auth.js";
+
 export class User {
     public static BASE_URL = '/api/user';
     public static async get(id: string): Promise<User.visible> {
@@ -13,6 +15,19 @@ export class User {
         users: User.visible[]
     }> {
         const response = await fetch(`${this.BASE_URL}/?page=${page}&limit=${limit}`, { method: 'GET' });
+        const data = await response.json();
+        if (response.ok) {
+            if (data.success) return data.result;
+            else throw new Error(data.reason);
+        } else throw new Error(data.reason);
+    }
+    public static async edit(id: string, values: Partial<User.editUser>): Promise<User.visible> {
+        const body = new FormData();
+        for (const [key, value] of Object.entries(values)) {
+            if (value !== undefined) body.append(key, value ?? 'null');
+            console.log(key, value);
+        }
+        const response = await fetch(`${this.BASE_URL}/${id}`, { method: 'POST', body  });
         const data = await response.json();
         if (response.ok) {
             if (data.success) return data.result;
@@ -62,5 +77,15 @@ export namespace User {
         permissions: Permissions;
     }
     export type visible = Omit<User, 'auth'>;
+    export interface editUser {
+        username?: string | null;
+        name?: string | null;
+        bio?: string | null;
+        avatar?: File | null;
+        email?: string | null;
+        phone?: string | null;
+        address?: string | null;
+        password?: string | null;
+    }
 }
 export default User;

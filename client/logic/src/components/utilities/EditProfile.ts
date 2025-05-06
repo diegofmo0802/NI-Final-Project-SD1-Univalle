@@ -7,40 +7,48 @@ import Api from "../../api/Api.js";
 
 export class EditProfile extends Component<'div', EditProfile.eventMap> {
     protected component: Element<"div">;
-    protected user: Api.user.visible;
+    protected _user: Api.user.visible;
     protected avatar: LiveImageInput;
     protected name: TextInput;
     protected biography: TextInput;
     protected username: TextInput;
     protected role: Element<"span">;;
     protected options: Element<"div">;
+    protected showError: Element<"span">;
+    protected _error: string | null = null;
     public constructor(user: Api.user.visible) { super();
-        this.user = user;
+        this._user = user;
         this.component = Element.new('div').setAttribute('class', 'profile edit-profile');
         this.avatar = new LiveImageInput({ class: 'profile-avatar'});
         this.name = new TextInput({ class: 'profile-name', placeholder: Language.get('label.input.name') });
         this.biography = new TextInput({ type: 'textarea', class: 'profile-biography', placeholder: Language.get('label.input.biography') });
         this.username = new TextInput({ class: 'profile-username', placeholder: Language.get('label.input.username') });
         this.role = Element.new('span').setAttribute('class', 'profile-role');
+        this.showError = Element.new('span').setAttribute('class', 'error');
         this.options = Element.new('div').setAttribute('class', 'profile-options');
         const save = new Button(Language.get('label.button.save'), { class: 'save-button' });
         const cancel = new Button(Language.get('label.button.cancel'), { class: 'cancel-button' });
         this.options.append(save, cancel);
-        this.component.append(this.avatar, this.name, this.biography, this.username, this.role, this.options);
-        save.on('click', () => this.dispatch('save', this.getValues()));
+        this.component.append(this.avatar, this.name, this.biography, this.username, this.role, this.showError, this.options);
+        save.on('click', () => this.dispatch('save', this.values));
         cancel.on('click', () => this.dispatch('cancel'));
         this.loadInfo(user);
     }
-    public loadInfo(user: Api.user.visible) {
-        this.avatar.src = user.profile.avatar;
-        this.name.value = user.profile.name ?? '';
-        this.biography.value = user.profile.bio ?? '';
-        this.username.value = user.profile.username ?? '';
-        this.role.text(`${Language.get('profile.role-label')} ${user.profile.type ?? 'none'}`);
+    public get user(): Api.user.visible { return this._user; }
+    public set user(user: Api.user.visible) {
+        if (this._user === user) return;
+        this._user = user;
+        this.loadInfo(user);
     }
-    protected getValues() {
+    public get error(): string | null { return this._error; }
+    public set error(error: string | null) {
+        if (this._error === error) return;
+        this._error = error;
+        this.showError.text(error ?? '');
+    }
+    public get values(): EditProfile.Values {
         const values: EditProfile.Values = {};
-        const { user: { profile } } = this;
+        const { _user: { profile } } = this;
         const avatar    = this.avatar.getFile();
         const name      = this.name.value      || null;
         const biography = this.biography.value || null;
@@ -51,6 +59,13 @@ export class EditProfile extends Component<'div', EditProfile.eventMap> {
         if (username !== profile.username) values.username = username;
         return values;
     }
+    private loadInfo(user: Api.user.visible) {
+        this.avatar.src = user.profile.avatar;
+        this.name.value = user.profile.name ?? '';
+        this.biography.value = user.profile.bio ?? '';
+        this.username.value = user.profile.username ?? '';
+        this.role.text(`${Language.get('profile.role-label')} ${user.profile.type ?? 'none'}`);
+    }
 }
 
 export namespace EditProfile {
@@ -60,7 +75,7 @@ export namespace EditProfile {
         biography?: string | null;
         username?: string | null;
     }
-    export type SaveListener = (values: Values) => void;
+    export type SaveListener = (data: Values) => void;
     export type CancelListener = () => void;
     export type eventMap = {
         'save': SaveListener;

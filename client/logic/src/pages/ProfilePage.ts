@@ -9,14 +9,33 @@ export class ProfilePage extends Component<'div'> {
     public constructor() { super();
         this.component = Element.new('div', null, { class: 'profile-page' });
     }
-    public async load(uuid: string) {
+    public async load(uuid: string): Promise<Profile> {
         const user = await Api.user.get(uuid);
         this.profile = new Profile(user, this.isOwner(user));
-        this.profile.on('edit', (values) => {
-            console.log('[edit]: edited values:', values);
+        this.profile.on('edit', async (values, editComponent) => {
+            console.log(values);
+            try {
+                const user = await Api.user.edit(uuid, {
+                    username: values.username,
+                    name: values.name,
+                    bio: values.biography,
+                    avatar: values.avatar,
+                    // email: values.email || undefined,
+                    // phone: values.phone || undefined,
+                    // address: values.address || undefined,
+                });
+                session.loadSession(user);
+                if (this.profile) {
+                    this.profile.user = user;
+                    editComponent.getComponent().replaceWith(this.profile);
+                }
+            } catch (error) {
+                editComponent.error = error as string;
+            }
         });
         this.component.clean();
         this.component.append(this.profile);
+        return this.profile;
     }
     protected isOwner(user: Api.user.visible): boolean {
         const loggedUser = session.user;

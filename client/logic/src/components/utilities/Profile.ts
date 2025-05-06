@@ -69,9 +69,8 @@ class Profile extends Component<'div', Profile.eventMap> {
     protected edit() {
         if (!this._user) return;
         const editProfile = new EditProfile(this._user);
-        editProfile.on('save', (values) => {
-            editProfile.getComponent().replaceWith(this.component);
-            this.dispatch('edit', values)
+        editProfile.on('save', (data) => {
+            this.dispatch('edit', data, editProfile);
         });
         editProfile.on('cancel', () => {
             editProfile.getComponent().replaceWith(this.component);
@@ -92,8 +91,9 @@ class Profile extends Component<'div', Profile.eventMap> {
 export namespace Profile {
     export type Options = 'config';
     export type OptionEventListener = (option: Options, user: Api.user.visible) => void;
+    export type EditListener = (data: EditProfile.Values, editProfile: EditProfile) => void;
     export type eventMap = {
-        'edit': EditProfile.SaveListener;
+        'edit': EditListener;
         'option': OptionEventListener;
     };
 }

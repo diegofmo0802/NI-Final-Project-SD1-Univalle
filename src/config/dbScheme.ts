@@ -37,35 +37,6 @@ export const user = new Schema({
     } }
 });
 
-export const volunteer = new Schema({
-    _id: { type: 'string', required: true, unique: true, minLength: 36, maxLength: 36 },
-    profile: { type: 'object', required: true, schema: {
-        firstName: { type: 'string', required: true, minLength: 3, maxLength: 80 },
-        lastName: { type: 'string', required: true, minLength: 3, maxLength: 80 },
-        bio: { type: 'string', required: true, minLength: 10, maxLength: 500 },
-        avatar: { type: 'string', nullable: true }
-    } },
-    contactInfo: { type: 'object', required: true, schema: {
-        email: { type: 'string', required: true, unique: true, minLength: 6, maxLength: 100 },
-        phone: { type: 'string', required: true, unique: true, minLength: 10, maxLength: 10 }
-    } },
-});
-
-export const foundation = new Schema({
-    _id: { type: 'string', required: true, unique: true, minLength: 36, maxLength: 36 },
-    profile: { type: 'object', required: true, schema: {
-        name: { type: 'string', required: true, minLength: 3, maxLength: 100 },
-        description: { type: 'string', required: true, minLength: 10, maxLength: 500 },
-        logo: { type: 'string', nullable: true }
-    } },
-    contactInfo: { type: 'object', required: true, schema: {
-        address: { type: 'string', required: true, minLength: 10, maxLength: 200 },
-        email: { type: 'string', required: true, unique: true, minLength: 6, maxLength: 100 },
-        phone: { type: 'string', required: true, unique: true, minLength: 10, maxLength: 10 }
-    } },
-    status: { type: 'string', required: true, enum: ['active', 'inactive'], default: 'active' }
-});
-
 export const volunteerRequests = new Schema({
     _id: { type: 'string', required: true, unique: true, minLength: 36, maxLength: 36 },
     title: { type: 'string', required: true, minLength: 3, maxLength: 100 },

@@ -9,6 +9,15 @@ export async function getRequest(apiRequest: ApiRequest): Promise<void> {
     if (!request) return void apiRequest.sendError('request not found', 404);
     apiRequest.send(request);
 }
+export async function getRequests(apiRequest: ApiRequest): Promise<void> {
+    const pageParam = apiRequest.ruleParams.page ?? apiRequest.searchParams.page ?? '1';
+    const limitPAram = apiRequest.ruleParams.limit ?? apiRequest.searchParams.limit ?? '20';
+    const page = parseInt(pageParam);
+    const limit = parseInt(limitPAram);
+    if (isNaN(page) || isNaN(limit)) return void apiRequest.sendError('invalid page or limit', 400);
+    const requests = await requestManager.getRequests(page, limit);
+    apiRequest.send(requests);
+}
 
 export async function getUserPostulations(apiRequest: ApiRequest): Promise<void> {
     const uuid = apiRequest.ruleParams.uuid ?? apiRequest.searchParams.uuid;

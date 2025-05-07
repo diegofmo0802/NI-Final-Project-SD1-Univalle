@@ -44,11 +44,14 @@ export function addApiRoutes(server: ServerCore) {
     server.addAction('GET', '/api/user/$uuid/requests', (request, response) => {
         requestRule.getUserRequests(new ApiRequest(request, response));
     });
-    server.addAction('GET', route('/api/request/$uuid'), (request, response) => {
-        requestRule.getRequest(new ApiRequest(request, response));
-    });
     server.addAction('POST', '/api/user/$uuid/request', (request, response) => {
         requestRule.createRequest(new ApiRequest(request, response));
+    });
+    server.addAction('GET', route('/api/requests'), (request, response) => {
+        requestRule.getRequests(new ApiRequest(request, response));
+    });
+    server.addAction('GET', route('/api/request/$uuid'), (request, response) => {
+        requestRule.getRequest(new ApiRequest(request, response));
     });
     server.addAction('GET', route('/api/request/$uuid/postulations'), (request, response) => {
         requestRule.getUserPostulations(new ApiRequest(request, response));

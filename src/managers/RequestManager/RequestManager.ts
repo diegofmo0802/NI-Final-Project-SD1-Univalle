@@ -27,8 +27,7 @@ export class RequestManager {
                     localField: '_id',
                     foreignField: 'requestID',
                     as: 'postulations'
-                } },
-                { $unwind: '$postulations' },
+                } }
             ]);
             const request = result[0] ?? null;
             if (!request) return null;
@@ -49,8 +48,7 @@ export class RequestManager {
                     localField: '_id',
                     foreignField: 'requestID',
                     as: 'postulations'
-                } },
-                { $unwind: '$postulations' },
+                } }
             ]);
             return result.map((document) => new Request(this, document, document.postulations?.map((postulation) => new Postulation(this, postulation)) ?? []));
         });
@@ -88,14 +86,23 @@ export class RequestManager {
         
     public async createRequest(data: Omit<Request.data, '_id'>): Promise<Request> {
         return this.collRequest.transaction(async (db, collection) => {
+            const uuid = randomUUID();
             const insert = await collection.insertOne({
                 ...data,
-                _id: randomUUID(),
+                _id: uuid,
                 createdAt: Date.now()
             });
-            const result = await this.getRequest(insert.insertedId);
-            if (!result) throw new Error('Request not found');
-            return result;
+            const result = await collection.aggregate<Request.data & { postulations?: Postulation.data[] }>([
+                { $match: { _id: insert.insertedId } },
+                { $lookup: {
+                    from: 'volunteerPostulations',
+                    localField: '_id',
+                    foreignField: 'requestID',
+                    as: 'postulations'
+                } }
+            ]);
+            if (result.length === 0) throw new Error('Request not found');
+            return new Request(this, result[0], result[0].postulations?.map((postulation) => new Postulation(this, postulation)) ?? []);
         });
     }
 

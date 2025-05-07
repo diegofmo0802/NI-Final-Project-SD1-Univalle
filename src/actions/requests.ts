@@ -1,6 +1,6 @@
-import requestManager from "config/requestManager";
-import userManager from "config/userManager";
-import ApiRequest from "helper/ApiRequest";
+import requestManager from "../config/requestManager.js";
+import userManager from "../config/userManager.js";
+import ApiRequest from "../helper/ApiRequest.js";
 
 export async function getRequest(apiRequest: ApiRequest): Promise<void> {
     const uuid = apiRequest.ruleParams.uuid ?? apiRequest.searchParams.uuid;

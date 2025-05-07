@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 
 import { volunteerPostulations, volunteerRequests } from "../../config/dbScheme.js";
-import { CollectionSession, Schema } from "../../DBManager/Manager";
+import { CollectionSession, Schema } from "../../DBManager/Manager.js";
 import Request from "./Request.js";
 import Postulation from "./Postulation.js";
 

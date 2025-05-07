@@ -14,4 +14,10 @@ remove_build_dir "build"
 echo "Building server"
 npm install && npx tsc
 
+cd client/logic
+remove_build_dir "build"
+
+echo "Building client"
+npm install && npx tsc
+
 echo "Build completed successfully"

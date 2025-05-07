@@ -1,3 +1,4 @@
+import { title } from "process";
 import requestManager from "../config/requestManager.js";
 import userManager from "../config/userManager.js";
 import ApiRequest from "../helper/ApiRequest.js";
@@ -79,15 +80,20 @@ export async function createRequest(apiRequest: ApiRequest): Promise<void> {
     if (body.mimeType !== 'multipart/form-data') return void apiRequest.sendError('no body provided', 400);
 
 
-    const { tittle, description, count } = body.content
-    if (!tittle || tittle.length < 3) return void apiRequest.sendError('invalid tittle', 400);
-    if (!description || description.length < 3) return void apiRequest.sendError('invalid description', 400);
-    if (!count) return void apiRequest.sendError('invalid count', 400);
+    const { title, description, count } = body.content
+
+    if (!title) return void apiRequest.sendError('missing tittle', 400);
+    if (!description) return void apiRequest.sendError('missing description', 400);
+    if (!count) return void apiRequest.sendError('missing count', 400);
+
+    if (!requestManager.isValidTitle(title).valid) return void apiRequest.sendError('invalid tittle', 400);
+    if (!requestManager.isValidDescription(description).valid) return void apiRequest.sendError('invalid description', 400);
+
     const countNumber = parseInt(count);
     if (isNaN(countNumber) || countNumber < 1) return void apiRequest.sendError('invalid count', 400);
 
     const request = await requestManager.createRequest({
-        title: tittle,
+        title: title,
         description: description,
         userID: uuid,
         endDate: Date.now() + 604800000, // 1 week

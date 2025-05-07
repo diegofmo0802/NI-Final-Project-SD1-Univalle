@@ -4,6 +4,7 @@ import { volunteerPostulations, volunteerRequests } from "../../config/dbScheme.
 import { CollectionSession, Schema } from "../../DBManager/Manager.js";
 import Request from "./Request.js";
 import Postulation from "./Postulation.js";
+import UserManager from "managers/UserManager/UserManager.js";
 
 export class RequestManager {
     public constructor(
@@ -105,7 +106,16 @@ export class RequestManager {
             return new Request(this, result[0], result[0].postulations?.map((postulation) => new Postulation(this, postulation)) ?? []);
         });
     }
-
+    public isValidTitle(title: string): UserManager.validatorResponse {
+        if (title.length < 3) return { valid: false, reason: 'Title must be at least 3 characters long' };
+        if (title.length > 100) return { valid: false, reason: 'Title must be less than 100 characters long' };
+        return { valid: true };
+    }
+    public isValidDescription(description: string): UserManager.validatorResponse {
+        if (description.length < 10) return { valid: false, reason: 'Description must be at least 3 characters long' };
+        if (description.length > 1000) return { valid: false, reason: 'Description must be less than 1000 characters long' };
+        return { valid: true };
+    }
 }
 
 export namespace RequestManager {}

@@ -16,7 +16,7 @@ export async function getRequests(apiRequest: ApiRequest): Promise<void> {
     const limit = parseInt(limitPAram);
     if (isNaN(page) || isNaN(limit)) return void apiRequest.sendError('invalid page or limit', 400);
     const requests = await requestManager.getRequests(page, limit);
-    apiRequest.send(requests);
+    apiRequest.send({ page, limit, count: requests.length, requests });
 }
 
 export async function getUserPostulations(apiRequest: ApiRequest): Promise<void> {
@@ -28,7 +28,7 @@ export async function getUserPostulations(apiRequest: ApiRequest): Promise<void>
     const limit = parseInt(limitPAram);
     if (isNaN(page) || isNaN(limit)) return void apiRequest.sendError('invalid page or limit', 400);
     const postulations = await requestManager.getPostulations(page, limit, uuid);
-    apiRequest.send(postulations);
+    apiRequest.send({ page, limit, count: postulations.length, postulations });
 }
 export async function getUserRequests(apiRequest: ApiRequest): Promise<void> {
     const uuid = apiRequest.ruleParams.uuid ?? apiRequest.searchParams.uuid;
@@ -38,8 +38,8 @@ export async function getUserRequests(apiRequest: ApiRequest): Promise<void> {
     const page = parseInt(pageParam);
     const limit = parseInt(limitPAram);
     if (isNaN(page) || isNaN(limit)) return void apiRequest.sendError('invalid page or limit', 400);
-    const postulations = await requestManager.getRequests(page, limit, uuid);
-    apiRequest.send(postulations);
+    const requests = await requestManager.getRequests(page, limit, uuid);
+    apiRequest.send({ page, limit, count: requests.length, requests });
 }
 export async function getRequestPostulations(apiRequest: ApiRequest): Promise<void> {
     const requestID = apiRequest.ruleParams.requestID ?? apiRequest.searchParams.requestID;
@@ -50,7 +50,7 @@ export async function getRequestPostulations(apiRequest: ApiRequest): Promise<vo
     const limit = parseInt(limitPAram);
     if (isNaN(page) || isNaN(limit)) return void apiRequest.sendError('invalid page or limit', 400);
     const postulations = await requestManager.getRequestPostulations(page, limit, requestID);
-    apiRequest.send(postulations);
+    apiRequest.send({ page, limit, count: postulations.length, postulations });
 }
 
 export async function createRequest(apiRequest: ApiRequest): Promise<void> {

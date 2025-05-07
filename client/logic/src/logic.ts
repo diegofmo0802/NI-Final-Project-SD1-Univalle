@@ -7,6 +7,8 @@ import Api from './api/Api.js';
 import UserListPage from './pages/UserListPage.js';
 import Auth from './helper/Auth.js';
 import ProfilePage from './pages/ProfilePage.js';
+import RequestListPage from './pages/RequestListPage.js';
+import NewRequestPage from './pages/NewRequestPage.js';
 
 ///@ts-ignore
 window.api = Api;
@@ -20,6 +22,9 @@ session.on('option', async (option) => {
         case 'profile': {
             if (session.user) app.router.setPage(`/app/user/${session.user._id}`);
             else app.router.setPage('/app/login'); break;
+        }
+        case 'newPost': {
+            app.router.setPage('/app/new-requests'); break;
         }
         case 'logout': {
             const response = await Api.auth.logout();
@@ -62,10 +67,24 @@ app.addRender('/app/user', async () => {
 app.addRender('/app/user/$uuid', async ({ uuid }) => {
     if (!uuid) return void app.router.setPage('/app/user');
     components.content.clean();
-    if (!await Auth.checkAuth()) return void app.router.setPage('/app/login');
+    // if (!await Auth.checkAuth()) return void app.router.setPage('/app/login');
     const profile = new ProfilePage();
     await profile.load(uuid);
     components.content.append(profile);
+});
+
+app.addRender('/app/new-requests', async () => {
+    components.content.clean();
+    if (!await Auth.checkAuth() || !session.user) return void app.router.setPage('/app/login');
+    const newRequestPage = new NewRequestPage(session.user._id);
+    newRequestPage.on('submit', newRequestPage.submit.bind(newRequestPage));
+    components.content.append(newRequestPage);
+});
+
+app.addRender('/app/requests', async () => {
+    const requestListPage = new RequestListPage();
+    requestListPage.loadRequests();
+    components.content.append(requestListPage);
 });
 
 components.menu.on('home', () => app.router.setPage('/app'));

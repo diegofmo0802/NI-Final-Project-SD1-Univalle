@@ -39,17 +39,19 @@ export const user = new Schema({
 
 export const volunteerRequests = new Schema({
     _id: { type: 'string', required: true, unique: true, minLength: 36, maxLength: 36 },
+    userID: { type: 'string', required: true, unique: true, minLength: 36, maxLength: 36 },
     title: { type: 'string', required: true, minLength: 3, maxLength: 100 },
     description: { type: 'string', required: true, minLength: 10, maxLength: 1000 },
     volunteerCount: { type: 'number', required: true, min: 1 },
     status: { type: 'string', required: true, enum: ['open', 'closed', 'cancelled'], default: 'open' },
     startDate: { type: 'number', required: true },
-    endDate: { type: 'number', required: true }
+    endDate: { type: 'number', required: true },
+    createdAt: { type: 'number', required: true }
 });
 
 export const volunteerPostulations = new Schema({
     _id: { type: 'string', required: true, unique: true, minLength: 36, maxLength: 36 },
     requestID: { type: 'string', required: true, minLength: 36, maxLength: 36 },
     userID: { type: 'string', required: true, minLength: 36, maxLength: 36 },
-    createdAt: { type: 'number' }
+    createdAt: { type: 'number', required: true }
 });

@@ -16,7 +16,10 @@ export async function getRequests(apiRequest: ApiRequest): Promise<void> {
     const limit = parseInt(limitPAram);
     if (isNaN(page) || isNaN(limit)) return void apiRequest.sendError('invalid page or limit', 400);
     const requests = await requestManager.getRequests(page, limit);
-    apiRequest.send({ page, limit, count: requests.length, requests });
+    apiRequest.send({
+        page, limit, count: requests.length,
+        requests: requests.map((request) => request.data)
+    });
 }
 
 export async function getUserPostulations(apiRequest: ApiRequest): Promise<void> {
@@ -28,7 +31,10 @@ export async function getUserPostulations(apiRequest: ApiRequest): Promise<void>
     const limit = parseInt(limitPAram);
     if (isNaN(page) || isNaN(limit)) return void apiRequest.sendError('invalid page or limit', 400);
     const postulations = await requestManager.getPostulations(page, limit, uuid);
-    apiRequest.send({ page, limit, count: postulations.length, postulations });
+    apiRequest.send({
+        page, limit, count: postulations.length,
+        postulations: postulations.map((postulation) => postulation.data)
+    });
 }
 export async function getUserRequests(apiRequest: ApiRequest): Promise<void> {
     const uuid = apiRequest.ruleParams.uuid ?? apiRequest.searchParams.uuid;
@@ -39,7 +45,10 @@ export async function getUserRequests(apiRequest: ApiRequest): Promise<void> {
     const limit = parseInt(limitPAram);
     if (isNaN(page) || isNaN(limit)) return void apiRequest.sendError('invalid page or limit', 400);
     const requests = await requestManager.getRequests(page, limit, uuid);
-    apiRequest.send({ page, limit, count: requests.length, requests });
+    apiRequest.send({
+        page, limit, count: requests.length,
+        requests: requests.map((request) => request.data)
+    });
 }
 export async function getRequestPostulations(apiRequest: ApiRequest): Promise<void> {
     const requestID = apiRequest.ruleParams.requestID ?? apiRequest.searchParams.requestID;
@@ -50,7 +59,10 @@ export async function getRequestPostulations(apiRequest: ApiRequest): Promise<vo
     const limit = parseInt(limitPAram);
     if (isNaN(page) || isNaN(limit)) return void apiRequest.sendError('invalid page or limit', 400);
     const postulations = await requestManager.getRequestPostulations(page, limit, requestID);
-    apiRequest.send({ page, limit, count: postulations.length, postulations });
+    apiRequest.send({
+        page, limit, count: postulations.length,
+        postulations: postulations.map((postulation) => postulation.data)
+    });
 }
 
 export async function createRequest(apiRequest: ApiRequest): Promise<void> {
@@ -75,8 +87,8 @@ export async function createRequest(apiRequest: ApiRequest): Promise<void> {
     if (isNaN(countNumber) || countNumber < 1) return void apiRequest.sendError('invalid count', 400);
 
     const request = await requestManager.createRequest({
-        title: 'test',
-        description: 'test',
+        title: tittle,
+        description: description,
         userID: uuid,
         endDate: Date.now() + 604800000, // 1 week
         startDate: Date.now(),

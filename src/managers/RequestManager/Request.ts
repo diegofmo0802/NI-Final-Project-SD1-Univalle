@@ -24,6 +24,12 @@ export class Request implements Request.data {
         this.currentData = data;
         this.setData(data);
     }
+    public get data(): Request.data & { postulations?: Postulation.data[] } {
+        return {
+            ...this.currentData,
+            postulations: this.postulations.map((postulation) => postulation.data)
+        };
+    }
     private setData(data: Request.data): void {
         this._userID = data.userID;
         this._title = data.title;

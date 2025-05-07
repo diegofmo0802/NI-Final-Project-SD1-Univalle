@@ -16,6 +16,7 @@ export class Postulation implements Postulation.data {
         this.currentData = data;
         this.setData(data);
     }
+    public get data(): Postulation.data { return this.currentData; }
     private setData(data: Postulation.data): void {
         this._requestID = data.requestID;
         this._userID = data.userID;

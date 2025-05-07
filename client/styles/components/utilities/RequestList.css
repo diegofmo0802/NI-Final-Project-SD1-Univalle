@@ -1,0 +1,65 @@
+.requestList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-width: 25%;
+    > .requests {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 400px));
+        grid-template-rows: auto;
+        gap: var(--spacing-large);
+        max-width: var(--max-width);
+        padding: var(--spacing-large);
+        width: 100%;
+        > .Loading,
+        > .request {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-large);
+            border: 2px solid transparent;
+            background: var(--gallery-bg-color);
+            padding: 0.5rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: background 0.5s, transform 0.5s;
+            > .info {
+                display: flex;
+                flex-direction: column;
+                gap: var(--spacing-medium);
+                > .title {
+                    font-size: 1.25rem;
+                    font-weight: bold;
+                    margin: 0;
+                }
+                > .description {
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    max-width: 100%;
+                }
+                > .count {
+                    font-size: 1rem;
+                    color: #666;
+                }
+            }
+        }
+        > .request:hover {
+            border: 2px solid var(--border-color);
+            background: var(--gallery-hover-bg-color);
+            transform: scale(1.05);
+        }
+        > .Loading {
+            pointer-events: none;
+            position: relative;
+            border: none;
+            padding: 1em;
+            background: none;
+            > div {
+                width: min-content;
+            }
+        }
+    }
+}

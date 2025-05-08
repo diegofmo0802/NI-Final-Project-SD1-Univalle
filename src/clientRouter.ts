@@ -10,5 +10,6 @@ export function addClientRules(server: ServerCore) {
     server.addFolder('/client', './client');
     server.addAction('GET', '/', sendIndex);
     server.addAction('GET', '/app/*', sendIndex);
+    server.addFile('/favicon.ico', './client/assets/logo.png');
 }
 export default addClientRules;

@@ -30,3 +30,4 @@ export class Menu extends Component<'nav'> {
         this.options.clean();
     }
 }
+export default Menu;

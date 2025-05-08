@@ -9,6 +9,7 @@ import Auth from './helper/Auth.js';
 import ProfilePage from './pages/ProfilePage.js';
 import RequestListPage from './pages/RequestListPage.js';
 import NewRequestPage from './pages/NewRequestPage.js';
+import FAQPage from './pages/FAQPage.js';
 
 ///@ts-ignore
 window.api = Api;
@@ -37,9 +38,24 @@ session.on('option', async (option) => {
 
 app.renderRoot(...schema);
 
+app.addRender('/', () => {
+    components.content.clean();
+    components.content.append(new HomePage());
+});
 app.addRender('/app/', () => {
     components.content.clean();
     components.content.append(new HomePage());
+});
+app.addRender('/app/about', () => {
+    components.content.clean();
+    const faqPage = new FAQPage();
+    faqPage.loadMembers(
+        '3f432f27-2a49-4447-b9a3-51a93f76dd66',
+        '740dd446-9d0e-4472-abd6-cc0c6b0fdb27',
+        '902acb41-e9bf-4ea6-b21b-99cbfc3532fd',
+        '8f0e6dd6-4711-4ef9-b57f-d15ddcf9ec49'
+    );
+    components.content.append(faqPage);
 });
 
 app.addRender('/app/login', () => {
@@ -89,5 +105,6 @@ app.addRender('/app/requests', async () => {
 
 components.menu.on('home', () => app.router.setPage('/app'));
 components.menu.on('users', () => app.router.setPage('/app/user'));
+components.menu.on('about', () => app.router.setPage('/app/about'));
 
 app.init();

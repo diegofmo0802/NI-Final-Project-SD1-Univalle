@@ -1,0 +1,21 @@
+.faq-page {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    padding: 2em;
+    width: 100%;
+    height: 100%;
+    background: #dfcde6 ;
+    > ol {
+        list-style: none;
+        border-radius: 0.5em;
+        padding: 0.5em;
+        > li {
+            border-radius: 0.5em;
+            padding: 0.5em;
+            margin: 0.5em;
+            background: var(--gallery-bg-color);
+        }
+    }
+}

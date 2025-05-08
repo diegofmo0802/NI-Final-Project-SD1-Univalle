@@ -1,8 +1,9 @@
 import { Component, Element } from '../WebApp/WebApp.js';
 import Profile from '../components/utilities/Profile.js';
 import Api from '../api/Api.js';
-import { session } from '../app.js';
+import app, { session } from '../app.js';
 import RequestListPage from './RequestListPage.js';
+import Auth from '../helper/Auth.js';
 
 export class ProfilePage extends Component<'div'> {
     protected component: Element<'div'>;
@@ -20,6 +21,7 @@ export class ProfilePage extends Component<'div'> {
         this.profile.on('edit', async (values, editComponent) => {
             console.log(values);
             try {
+                if (!await Auth.checkAuth()) return void app.router.setPage('/app/login');
                 const user = await Api.user.edit(uuid, {
                     username: values.username,
                     name: values.name,
@@ -29,7 +31,7 @@ export class ProfilePage extends Component<'div'> {
                     // phone: values.phone || undefined,
                     // address: values.address || undefined,
                 });
-                session.loadSession(user);
+                if (session.user?._id === user._id) session.loadSession(user);
                 if (this.profile) {
                     this.profile.user = user;
                     editComponent.getComponent().replaceWith(this.profile);

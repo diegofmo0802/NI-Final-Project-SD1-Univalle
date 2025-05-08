@@ -1,19 +1,21 @@
-import app, { loading, session } from './app.js';
-import { components, schema } from './config.js';
+import app, { schema, components, session } from './app.js';
+import Language from './helper/language.js';
+import Auth from './helper/Auth.js';
+import Api from './api/Api.js';
+
 import HomePage from './pages/HomePage.js';
 import LoginPage from './pages/LoginPage.js';
 import RegisterPage from './pages/RegisterPage.js';
-import Api from './api/Api.js';
 import UserListPage from './pages/UserListPage.js';
-import Auth from './helper/Auth.js';
 import ProfilePage from './pages/ProfilePage.js';
 import RequestListPage from './pages/RequestListPage.js';
 import NewRequestPage from './pages/NewRequestPage.js';
 import FAQPage from './pages/FAQPage.js';
 
 ///@ts-ignore
-window.api = Api;
+window.api = Api; window.lang = Language;
 
+app.renderRoot(...schema);
 const response = await Api.auth.check();
 if (response.success) session.loadSession(response.result.user);
 session.on('login', () => app.router.setPage('/app/login'));
@@ -35,8 +37,6 @@ session.on('option', async (option) => {
         }
     }
 });
-
-app.renderRoot(...schema);
 
 app.addRender('/', () => {
     components.content.clean();

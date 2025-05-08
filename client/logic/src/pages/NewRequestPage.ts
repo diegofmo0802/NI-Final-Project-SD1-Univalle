@@ -60,9 +60,9 @@ export class NewRequestPage extends Component<'div', NewRequestPage.eventMap> {
         const response = await Api.request.create(this.userID, {
             title, description, count
         });
-        if (!response.success) this.showError(response.reason);
-        app.router.setPage('/app/user/' + this.userID);
         this.loading(false);
+        if (!response.success) return void this.showError(response.reason);
+        app.router.setPage('/app/user/' + this.userID);
     }
 }
 export namespace NewRequestPage {

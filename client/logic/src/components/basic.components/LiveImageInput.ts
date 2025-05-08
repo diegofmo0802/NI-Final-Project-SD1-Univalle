@@ -15,7 +15,7 @@ export class LiveImageInput extends Component<'div', LiveImageInput.EventMap> {
         this.default = options.src ?? '';
         this.id = 'liveImageInput-' + Math.random().toString(36).substring(2, 9);
 
-        this.loading = new Loading('/client/src/logo.png');
+        this.loading = new Loading('/client/assets/logo.png');
 
         this.preview = Element.new('img').setAttributes({
             class: 'liveImageInput-preview',

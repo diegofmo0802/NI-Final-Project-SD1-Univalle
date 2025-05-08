@@ -11,7 +11,7 @@ export class UserList extends Component<'div', UserList.EventMap> {
     protected userElements: Element<'div'>[] = [];
     protected users: Api.user.visible[] = [];
     public constructor(users: Api.user.visible[] = []) { super()
-        this.loading = new Loading('/client/src/logo.png');
+        this.loading = new Loading('/client/assets/logo.png');
         this.endMessage =  Element.structure({type: 'div', attribs: { class: 'user endMessage' }, childs: [
             { type: 'p', text: Language.get('user-list.end'), attribs: { class: 'endMessage-text' } }
         ] });
@@ -45,7 +45,7 @@ export class UserList extends Component<'div', UserList.EventMap> {
     }
     protected newUser(user: Api.user.visible): Element<'div'> {
         let element = Element.structure({type: 'div', attribs: { class: 'user' }, childs: [
-            { type: 'img', attribs: { class: 'avatar', src: user.profile.avatar ?? '/client/src/logo.png' }},
+            { type: 'img', attribs: { class: 'avatar', src: user.profile.avatar ?? '/client/assets/logo.png' }},
             { type: 'div', attribs: { class: 'info', }, childs: [
                 { type: 'h2', attribs: { class: 'name' },  text: `${user.profile.name ?? user.profile.username}` },
                 { type: 'span', attribs: {class: 'role' }, text: `${Language.get('user-list.label.role')}: ${user.profile.username}` }

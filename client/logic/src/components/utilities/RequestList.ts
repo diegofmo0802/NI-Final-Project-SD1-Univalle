@@ -11,7 +11,7 @@ export class RequestList extends Component<'div', RequestList.EventMap> {
     protected userElements: Element<'div'>[] = [];
     protected requests: Api.request.data[] = [];
     public constructor(requests: Api.request.data[] = []) { super()
-        this.loading = new Loading('/client/src/logo.png');
+        this.loading = new Loading('/client/assets/logo.png');
         this.endMessage =  Element.structure({type: 'div', attribs: { class: 'request endMessage' }, childs: [
             { type: 'p', text: Language.get('request-list.end'), attribs: { class: 'endMessage-text' } }
         ] });

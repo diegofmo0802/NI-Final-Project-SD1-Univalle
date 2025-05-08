@@ -18,7 +18,7 @@ export class RegisterPage extends Component<'div', RegisterPage.eventMap> {
     protected loadingComponent: Loading;
     protected form: Element<'div'>;
     public constructor() { super();
-        const submit = new Button(Language.get('page.register.submit-button'));
+        const submit = new Button(Language.get('page.register.button.submit'));
         this.loadingComponent = new Loading('/client/assets/logo.svg');
         this.component = Element.new('div', null, { class: 'form-page register-page' });
         this.avatar = new LiveImageInput({
@@ -27,18 +27,18 @@ export class RegisterPage extends Component<'div', RegisterPage.eventMap> {
             class: 'avatar-chooser'
         });
         this.username = new TextInput({
-            placeholder: Language.get('page.register.username-label'),
+            placeholder: Language.get('page.register.label.username'),
         });
         this.email = new TextInput({
-            placeholder: Language.get('page.register.email-label'),
+            placeholder: Language.get('page.register.label.email'),
             type: 'email'
         });
         this.password = new TextInput({
-            placeholder: Language.get('page.register.password-label'),
+            placeholder: Language.get('page.register.label.password'),
             type: 'password',
         });
         this.confirmation = new TextInput({
-            placeholder: Language.get('page.register.confirm-password-label'),
+            placeholder: Language.get('page.register.label.confirm-password'),
             type: 'password',
         });
         this.error = Element.new('p', null, { class: 'form-error' });

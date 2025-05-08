@@ -14,14 +14,14 @@ export class LoginPage extends Component<'div', LoginPage.eventMap> {
     protected loadingComponent: Loading;
     protected form: Element<'div'>;
     public constructor() { super();
-        const submit = new Button(Language.get('page.login.submit-button'));
+        const submit = new Button(Language.get('page.login.button.submit'));
         this.loadingComponent = new Loading('/client/assets/logo.svg');
         this.component = Element.new('div', null, { class: 'form-page login-page' });
         this.username = new TextInput({
-            placeholder: Language.get('page.login.username-label'),
+            placeholder: Language.get('page.login.label.username'),
         });
         this.password = new TextInput({
-            placeholder: Language.get('page.login.password-label'),
+            placeholder: Language.get('page.login.label.password'),
             type: 'password',
         });
         this.error = Element.new('p', null, { class: 'form-error' });

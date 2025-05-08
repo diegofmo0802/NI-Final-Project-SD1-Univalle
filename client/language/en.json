@@ -2,26 +2,53 @@
     "menu.button.home": "home",
     "menu.button.about": "about us",
     "menu.button.users": "users",
+    "menu.button.requests": "requests",
+
+    "session.button.new-request": "new request",
+    "session.button.profile": "my profile",
+    "session.button.register": "register",
+    "session.button.login": "log-in",
+    "session.button.logout": "log-out",
 
     "page.home.welcome-title": "temporal title",
     "page.home.welcome-message": "a default message",
 
     "page.login.title": "Log-in",
-    "page.login.username-label": "username",
-    "page.login.password-label": "password",
-    "page.login.submit-button": "log-in",
+    "page.login.label.username": "username",
+    "page.login.label.password": "password",
+    "page.login.button.submit": "log-in",
 
     "page.register.title": "Register",
-    "page.register.username-label": "username",
-    "page.register.email-label": "email address",
-    "page.register.password-label": "password",
-    "page.register.confirm-password-label": "repeat password",
-    "page.register.submit-button": "create",
+    "page.register.label.username": "username",
+    "page.register.label.email": "email address",
+    "page.register.label.password": "password",
+    "page.register.label.confirm-password": "repeat password",
+    "page.register.button.submit": "create",
     "page.register.error.password-no-match": "password and confirmation is not the same",
     
-    "user-list.label.role": "username",
-    "user-list.end": "no more users to show",
+    "component.user-list.label.role": "username",
+    "component.user-list.end": "no more users to show",
 
-    "api.register.user-already-exists": "the user already exists",
-    "api.register.avatar-error": "failed to save avatar"
+    "component.request-list.label.count": "volunteers",
+    "component.request-list.end": "no more requests to show",
+
+    "component.profile.label.name": "name",
+    "component.profile.label.username": "username",
+    "component.profile.label.bio": "biography",
+    "component.profile.label.role": "role",
+    "component.profile.button.share": "share",
+    "component.profile.button.edit": "edit",
+
+    "page.new-request.title": "new request",
+    "page.new-request.label.title": "title",
+    "page.new-request.label.description": "description",
+    "page.new-request.label.count": "volunteer count",
+    "page.new-request.button.submit": "create",
+
+
+    "component.edit-profile.button.save": "save",
+    "component.edit-profile.button.cancel": "cancel",
+
+    "api.register.error.user-already-exists": "the user already exists",
+    "api.register.error.avatar-error": "failed to save avatar"
 }

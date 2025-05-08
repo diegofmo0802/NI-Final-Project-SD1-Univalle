@@ -13,7 +13,7 @@ export class RequestList extends Component<'div', RequestList.EventMap> {
     public constructor(requests: Api.request.data[] = []) { super()
         this.loading = new Loading('/client/assets/logo.png');
         this.endMessage =  Element.structure({type: 'div', attribs: { class: 'request endMessage' }, childs: [
-            { type: 'p', text: Language.get('request-list.end'), attribs: { class: 'endMessage-text' } }
+            { type: 'p', text: Language.get('component.request-list.end'), attribs: { class: 'endMessage-text' } }
         ] });
         this.RequestList = Element.new('div').setAttribute('class', 'requests');
         this.component = Element.new('div').setAttribute('class', 'requestList');
@@ -47,7 +47,7 @@ export class RequestList extends Component<'div', RequestList.EventMap> {
             { type: 'div', attribs: { class: 'info', }, childs: [
                 { type: 'h2', attribs: { class: 'title' },  text: `${request.title }` },
                 { type: 'p', attribs: {class: 'description' }, text: `${request.description}` },
-                { type: 'p', attribs: {class: 'count' }, text: `${Language.get('request-list.label.count')}: ${request.volunteerCount}` }
+                { type: 'p', attribs: {class: 'count' }, text: `${Language.get('component.request-list.label.count')}: ${request.volunteerCount}` }
             ]}
         ] });
         element.on('click', () => {

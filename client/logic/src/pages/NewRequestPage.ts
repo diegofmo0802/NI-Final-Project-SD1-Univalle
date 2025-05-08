@@ -17,18 +17,18 @@ export class NewRequestPage extends Component<'div', NewRequestPage.eventMap> {
     public constructor(
         protected userID: string,
     ) { super();
-        const submit = new Button(Language.get('page.login.submit-button'));
+        const submit = new Button(Language.get('page.login.button.submit'));
         this.loadingComponent = new Loading('/client/assets/logo.svg');
         this.component = Element.new('div', null, { class: 'form-page login-page' });
         this.title = new TextInput({
-            placeholder: Language.get('page.new-request.title-label'),
+            placeholder: Language.get('page.new-request.label.title'),
         });
         this.description = new TextInput({
-            placeholder: Language.get('page.new-request.description-label'),
+            placeholder: Language.get('page.new-request.label.description'),
             type: 'textarea'
         });
         this.count = new TextInput({
-            placeholder: Language.get('page.new-request.count-label'),
+            placeholder: Language.get('page.new-request.label.count'),
         });
         this.error = Element.new('p', null, { class: 'form-error' });
         this.form = Element.structure({

@@ -13,7 +13,7 @@ export class UserList extends Component<'div', UserList.EventMap> {
     public constructor(users: Api.user.visible[] = []) { super()
         this.loading = new Loading('/client/assets/logo.png');
         this.endMessage =  Element.structure({type: 'div', attribs: { class: 'user endMessage' }, childs: [
-            { type: 'p', text: Language.get('user-list.end'), attribs: { class: 'endMessage-text' } }
+            { type: 'p', text: Language.get('component.user-list.end'), attribs: { class: 'endMessage-text' } }
         ] });
         this.userList = Element.new('div').setAttribute('class', 'users');
         this.component = Element.new('div').setAttribute('class', 'UserList');
@@ -48,7 +48,7 @@ export class UserList extends Component<'div', UserList.EventMap> {
             { type: 'img', attribs: { class: 'avatar', src: user.profile.avatar ?? '/client/assets/logo.png' }},
             { type: 'div', attribs: { class: 'info', }, childs: [
                 { type: 'h2', attribs: { class: 'name' },  text: `${user.profile.name ?? user.profile.username}` },
-                { type: 'span', attribs: {class: 'role' }, text: `${Language.get('user-list.label.role')}: ${user.profile.username}` }
+                { type: 'span', attribs: {class: 'role' }, text: `${Language.get('component.user-list.label.role')}: ${user.profile.username}` }
             ]}
         ] });
         element.on('click', () => {

@@ -1,3 +1,4 @@
+import Language from '../helper/language.js';
 import { Element, Events, Component } from '../WebApp/WebApp.js';
 import Api from '../api/Api.js';
 
@@ -47,8 +48,8 @@ class Session extends Component<'div', Session.EventMap> {
     protected renderLoggedOutState() {
         this.component.setAttribute('class', 'session off-session');
         this.component.append(
-            { type: 'button', text: 'Login', attribs: { class: 'Button session-button-login' }, events: { click: () => this.dispatch('login') } },
-            { type: 'button', text: 'Register', attribs: { class: 'Button session-button-register' }, events: { click: () => this.dispatch('register') } }
+            { type: 'button', text: Language.get('session.button.login'), attribs: { class: 'Button session-button-login' }, events: { click: () => this.dispatch('login') } },
+            { type: 'button', text: Language.get('session.button.register'), attribs: { class: 'Button session-button-register' }, events: { click: () => this.dispatch('register') } }
         );
     }
     /**
@@ -70,9 +71,9 @@ class Session extends Component<'div', Session.EventMap> {
      */
     protected createSessionOptions(): Element<'div'> {
         return Element.new('div').setAttributes({class: 'session-options', show: 'false'}).append(
-            { type: 'button', text: 'New Post', attribs: { class: 'Button session-button-new-post' }, events: { click: () => this.dispatch('option', 'newPost') } },
-            { type: 'button', text: 'Profile', attribs: { class: 'Button session-button-profile' }, events: { click: () => this.dispatch('option', 'profile') } },
-            { type: 'button', text: 'Log Out', attribs: { class: 'Button session-button-logout' }, events: { click: () => this.dispatch('option', 'logout') } }
+            { type: 'button', text: Language.get('session.button.new-request'), attribs: { class: 'Button session-button-new-post' }, events: { click: () => this.dispatch('option', 'newPost') } },
+            { type: 'button', text: Language.get('session.button.profile'), attribs: { class: 'Button session-button-profile' }, events: { click: () => this.dispatch('option', 'profile') } },
+            { type: 'button', text: Language.get('session.button.logout'), attribs: { class: 'Button session-button-logout' }, events: { click: () => this.dispatch('option', 'logout') } }
         );
     }
     /**

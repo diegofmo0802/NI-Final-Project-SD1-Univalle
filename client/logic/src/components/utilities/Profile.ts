@@ -46,14 +46,14 @@ class Profile extends Component<'div', Profile.eventMap> {
         this.avatar.setAttribute('src', user.profile.avatar ?? '/client/assets/logo.svg');
         this.name.text(user.profile.name ?? user.profile.username);
         this.biography.text(user.profile.bio ?? '');
-        this.username.text(`${Language.get('profile.username-label')} ${user.profile.username ?? 'user'}`);
-        this.role.text(`${Language.get('profile.role-label')} ${user.profile.type ?? 'none'}`);
+        this.username.text(`${Language.get('component.profile.label.username')} ${user.profile.username ?? 'user'}`);
+        this.role.text(`${Language.get('component.profile.label.role')} ${user.profile.type ?? 'none'}`);
         this.refreshEllipsis();
     }
     protected loadOptions() {
         this.options.clean();
-        const share = new Button(Language.get('label.button.share-profile'), { class: 'share-button' });
-        const edit = new Button(Language.get('label.button.edit-profile'));
+        const share = new Button(Language.get('component.profile.button.share'), { class: 'share-button' });
+        const edit = new Button(Language.get('component.profile.button.edit'));
         share.on('click', () => this.share());
         edit.on('click', () => this.edit());
         this.options.append(share);

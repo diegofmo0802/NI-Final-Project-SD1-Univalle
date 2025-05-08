@@ -20,14 +20,14 @@ export class EditProfile extends Component<'div', EditProfile.eventMap> {
         this._user = user;
         this.component = Element.new('div').setAttribute('class', 'profile edit-profile');
         this.avatar = new LiveImageInput({ class: 'profile-avatar'});
-        this.name = new TextInput({ class: 'profile-name', placeholder: Language.get('label.input.name') });
-        this.biography = new TextInput({ type: 'textarea', class: 'profile-biography', placeholder: Language.get('label.input.biography') });
-        this.username = new TextInput({ class: 'profile-username', placeholder: Language.get('label.input.username') });
+        this.name = new TextInput({ class: 'profile-name', placeholder: Language.get('component.profile.label.name') });
+        this.biography = new TextInput({ type: 'textarea', class: 'profile-biography', placeholder: Language.get('component.profile.label.bio') });
+        this.username = new TextInput({ class: 'profile-username', placeholder: Language.get('component.profile.label.username') });
         this.role = Element.new('span').setAttribute('class', 'profile-role');
         this.showError = Element.new('span').setAttribute('class', 'error');
         this.options = Element.new('div').setAttribute('class', 'profile-options');
-        const save = new Button(Language.get('label.button.save'), { class: 'save-button' });
-        const cancel = new Button(Language.get('label.button.cancel'), { class: 'cancel-button' });
+        const save = new Button(Language.get('component.edit-profile.button.save'), { class: 'save-button' });
+        const cancel = new Button(Language.get('component.edit-profile.button.cancel'), { class: 'cancel-button' });
         this.options.append(save, cancel);
         this.component.append(this.avatar, this.name, this.biography, this.username, this.role, this.showError, this.options);
         save.on('click', () => this.dispatch('save', this.values));
@@ -64,7 +64,7 @@ export class EditProfile extends Component<'div', EditProfile.eventMap> {
         this.name.value = user.profile.name ?? '';
         this.biography.value = user.profile.bio ?? '';
         this.username.value = user.profile.username ?? '';
-        this.role.text(`${Language.get('profile.role-label')} ${user.profile.type ?? 'none'}`);
+        this.role.text(`${Language.get('component.profile.label.role')} ${user.profile.type ?? 'none'}`);
     }
 }
 

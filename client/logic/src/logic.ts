@@ -81,8 +81,8 @@ app.addRender('/app/user', async () => {
 });
 
 app.addRender('/app/user/$uuid', async ({ uuid }) => {
-    if (!uuid) return void app.router.setPage('/app/user');
     components.content.clean();
+    if (!uuid) return void app.router.setPage('/app/user');
     // if (!await Auth.checkAuth()) return void app.router.setPage('/app/login');
     const profile = new ProfilePage();
     await profile.load(uuid);
@@ -98,13 +98,15 @@ app.addRender('/app/new-requests', async () => {
 });
 
 app.addRender('/app/requests', async () => {
+    components.content.clean();
     const requestListPage = new RequestListPage();
     requestListPage.loadRequests();
     components.content.append(requestListPage);
 });
 
 components.menu.on('home', () => app.router.setPage('/app'));
-components.menu.on('users', () => app.router.setPage('/app/user'));
 components.menu.on('about', () => app.router.setPage('/app/about'));
+components.menu.on('users', () => app.router.setPage('/app/user'));
+components.menu.on('requests', () => app.router.setPage('/app/requests'));
 
 app.init();
